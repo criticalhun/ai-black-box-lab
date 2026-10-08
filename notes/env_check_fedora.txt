@@ -1,0 +1,38 @@
+=== DATE ===
+2026-10-08T20:28:06+02:00
+=== OS ===
+NAME="Fedora Linux"
+VERSION="44 (Workstation Edition)"
+7.2.7-200.fc44.x86_64
+=== HW ===
+CPU(s):                                  32
+Model name:                              AMD Ryzen 9 5950X 16-Core Processor
+Thread(s) per core:                      2
+CPU(s) scaling MHz:                      50%
+               total        used        free      shared  buff/cache   available
+Mem:            46Gi       4,8Gi        23Gi        18Mi        18Gi        42Gi
+/dev/nvme0n1p3  1,9T 1023G  837G  56% /home
+=== PYTHON ===
+Python 3.14.8
+/usr/bin/python3
+venv+ensurepip OK
+=== TOOLS ===
+git version 2.56.0
+/usr/bin/uv
+/usr/bin/gh
+/usr/bin/pip3
+uv 0.12.19 (x86_64-unknown-linux-gnu)
+criticalhun
+criticalhun@proton.me
+=== GPU ===
+07:00.0 VGA compatible controller: NVIDIA Corporation AD107 [GeForce RTX 4060] (rev a1)
+nvidia_uvm           2682880  0
+nvidia_drm            180224  37
+nvidia_modeset       2002944  13 nvidia_drm
+nvidia              18505728  318 nvidia_uvm,nvidia_modeset
+name, driver_version, memory.total [MiB]
+NVIDIA GeForce RTX 4060, 615.71.09, 8188 MiB
+=== SECURE BOOT ===
+SecureBoot disabled
+Driver Version                                         : 615.71.09 [Deprecated; will be removed in CUDA 14.0. Use KMD Version instead]
+CUDA Version                                           : 13.4 [Deprecated; will be removed in CUDA 14.0. Use CUDA UMD Version instead]
