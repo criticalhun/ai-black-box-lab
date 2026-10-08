@@ -1,7 +1,7 @@
 # EXP010 — MLP-neuronok logit-hozzájárulásainak koherenciája (EXPLORATÍV)
 
 **Hipotézis:** nincs (hipotézis-generálás)
-**Státusz:** nem futott
+**Státusz:** COMPLETED (2026-10-08) — exploratív
 
 ## Kérdés
 Az egyváltozós tagok a neuronok közötti kioltás miatt tűnnek-e el a logitokból,

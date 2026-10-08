@@ -337,3 +337,27 @@ a+b végigfut minden c-n), így ott a margin oszlop nem informatív — csak a n
 - A helyes választ ~96%-ban az MLP szorzat-tagjai adják (DLA, nem beavatkozás).
 - Egy neuron kiolvasó vektora (W_out[n]·W_U) minden osztályra ugyanaz → az egyváltozós tagok
   "eltűnése" csak a neuronok EGYÜTTES hatásából (kioltás) jöhet. Ezt az EXP010 méri.
+
+## 2026-10-08 — EXP010 (EXPLORATÍV) — MLP-neuronok logit-hozzájárulásainak koherenciája
+
+### Módszer
+kappa = ||Σ_n hozzájárulás_n||² / Σ_n ||hozzájárulás_n||² (Gram-mátrixokkal).
+Kalibráció (tests/test_coherence.py): 0 / 2 / ~1 ismert esetekre; joint = DLA-norma. Commit 43cdea7.
+Gépek közötti ellenőrzés: seed0 init kappák pontosan egyeztek a sandboxban előre számolttal.
+
+### Megfigyelések
+| seed | kappa egyváltozós (végső / init) | kappa same_freq (végső / init) | kappa cross |
+|---|---|---|---|
+| 0 | 0.125 / 0.953 | 29.9 / 0.986 | 3.9 |
+| 1 | 0.029 / 0.980 | 62.5 / 0.986 | 2.6 |
+| 2 | 0.047 / 0.976 | 32.9 / 0.981 | 2.8 |
+
+### Értelmezés
+A neuronok egyváltozós logit-hozzájárulásai kioltják egymást, a szorzat-tagok erősítik
+egymást; init modellben mindkettő ~1 (inkoherens) → a tanítás terméke. Ez magyarázza,
+miért nem kellenek az egyváltozós tagok a kimenethez (H007).
+
+### Módszertani döntés
+A tervezett H010 (attention: to_a ≈ to_b, ±0.01) elvetve a rögzítés ELŐTT: a betanítatlan
+modell is teljesítette (0.0096) → nem informatív. Erősebb változat (csere-szimmetria) később,
+előbb exploratívan.

@@ -1,0 +1,18 @@
+experiment: EXP012
+hypotheses: [H008, H009]
+source:
+  experiment: EXP011
+  runs: [seed6, seed7, seed8]
+  checkpoint: step040000.pt
+  control_checkpoint: step000000.pt
+evaluation:
+  inputs: all_pairs
+  device: cpu
+H008:
+  univariate_max_kappa: 0.25
+  same_freq_min_kappa: 10.0
+  control_kappa_range: [0.8, 1.2]   # init: univariate és same_freq kappa is ebben a sávban
+H009:
+  min_total_margin: 1.0             # értelmes margin nélkül az arány nem definiált
+  mlp_same_freq_min_margin_share: 0.85
+  univariate_max_norm_share: 0.05
