@@ -53,3 +53,41 @@ def logit_fit(logits: torch.Tensor, p: int, freqs: list[int]) -> dict:
     coef = torch.linalg.lstsq(X, y).solution
     r2 = 1 - ((y - X @ coef) ** 2).sum() / (y ** 2).sum()
     return {"r2": r2.item(), "coef": {int(k): c.item() for k, c in zip(freqs, coef[:, 0])}}
+
+
+def logit_components(model: torch.nn.Module, tokens: torch.Tensor, p: int) -> tuple[dict, torch.Tensor]:
+    """Direct logit attribution at the '=' position, over the full (a, b) grid.
+    Returns ({component: [p, p, p] float64 (a, b, c)}, total logits [p, p, p]).
+    Components: constant parts (embed+pos of '=', MLP output bias) and the 2D Fourier
+    classes of attn_out and of MLP neuron activations, each read out through W_U."""
+    from src.fourier2d import CLASS_NAMES, project_out_classes
+
+    with torch.no_grad():
+        logits, cache = model.run_with_cache(tokens)
+    WU = model.W_U[:, :p].detach().to(torch.float64)                    # [d_model, p]
+    W_out = model.blocks[0].mlp.W_out.detach().to(torch.float64)        # [d_mlp, d_model]
+    b_out = model.blocks[0].mlp.b_out.detach().to(torch.float64)
+    pos = 2
+    grid = lambda x: x[:, pos].to(torch.float64).reshape(p, p, -1)     # [a, b, dim]
+
+    comps = {}
+    comps["const:embed+pos"] = (grid(cache["hook_embed"]) + grid(cache["hook_pos_embed"])) @ WU
+    comps["const:mlp_bias"] = (b_out @ WU).expand(p, p, p).clone()
+    attn, h = grid(cache[R + "hook_attn_out"]), grid(cache[R + "mlp.hook_post"])
+    for cls in CLASS_NAMES:
+        others = set(CLASS_NAMES) - {cls}
+        comps[f"attn:{cls}"] = project_out_classes(attn, others) @ WU
+        comps[f"mlp:{cls}"] = project_out_classes(h, others) @ W_out @ WU
+    total = logits[:, -1, :p].to(torch.float64).reshape(p, p, p)
+    return comps, total
+
+
+def dla_metrics(L: torch.Tensor, p: int) -> dict:
+    """L: [a, b, c]. Centered over c (softmax-invariant).
+    norm2: squared Frobenius norm of the centered logits.
+    margin: mean over (a, b) of L(a, b, c*) - mean_c L(a, b, c), c* = (a+b) mod p."""
+    Lc = L - L.mean(dim=2, keepdim=True)
+    ar = torch.arange(p)
+    cstar = (ar[:, None] + ar[None, :]) % p
+    margin = Lc.gather(2, cstar[:, :, None]).mean().item()
+    return {"norm2": (Lc ** 2).sum().item(), "margin": margin}
