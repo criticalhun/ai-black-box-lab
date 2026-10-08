@@ -1,7 +1,7 @@
 # EXP001 — 1 rétegű Transformer, moduláris összeadás
 
 **Hipotézis:** H001
-**Státusz:** PREREGISTERED (még nem futott)
+**Státusz:** COMPLETED (2026-10-08) — H001 SUPPORTED
 
 ## Cél
 Létrehozni a vizsgálat tárgyát: egy kis Transformert, amely a feladatot
@@ -30,3 +30,16 @@ determinisztikus módban. CPU és GPU eredményei bitre nem összevethetők.
 ## Amit az eredmény NEM bizonyít
 A magas teszt-pontosság csak azt mutatja, hogy van mit vizsgálni.
 A mechanizmusra vonatkozó állítások későbbi hipotézisek (H002+) tárgyai.
+
+## Eredmények (2026-10-08)
+Kód: commit f995dc3. Preregisztráció: commit a188156.
+
+| futás | train acc ≥ 0.99 | test acc ≥ 0.99 | végső test acc | végső test loss | súly-hash |
+|---|---|---|---|---|---|
+| seed0 | 200 | 10400 | 1.0000 | 7.23e-07 | 8085b4b645d6 |
+| seed1 | 200 | 8500 | 1.0000 | 1.64e-07 | 7845fe4fc865 |
+| seed2 | 200 | 10900 | 1.0000 | 1.74e-07 | e35cf6e46d3d |
+| seed0_rerun | 200 | 10400 | 1.0000 | 7.23e-07 | 8085b4b645d6 |
+
+- Determinizmus: seed0 vs seed0_rerun → metrics.csv bit-azonos, végső súly-hash azonos.
+- Futásidő: ~315 s / futás (~7.9 ms / lépés), RTX 4060.

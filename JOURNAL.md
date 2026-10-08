@@ -59,3 +59,61 @@ A környezet alkalmas kis modellek GPU-s és CPU-s tanítására.
 
 ### Következő lépés
 H001 és EXP001 preregisztrálása, majd a modell implementálása.
+
+## 2026-10-08 — EXP001 → H001
+
+### Cél
+Létrehozni egy kis Transformert, amely a `(a+b) mod 113` feladatot
+generalizálja (nem csak memorizálja) — a későbbi belső vizsgálatok tárgyát.
+
+### Hipotézis
+H001: a 30%-on tanított 1 rétegű modell a maradék 70%-on ≥ 99% pontosságot ér el
+(kritérium: mindhárom seed).
+
+### Módszer
+Preregisztráció: commit a188156. Kód: commit f995dc3.
+Full-batch AdamW (lr 1e-3, wd 1.0), 40 000 lépés, seed 0/1/2,
+fix adatfelosztás (data_seed 598, split sha256 8de4382ea6c7…),
++ seed 0 újrafuttatás determinizmus-ellenőrzésre.
+
+### Környezet
+Mint EXP000 (fedora, RTX 4060, torch 2.14.1+cu130), CUDA, deterministic algorithms,
+CUBLAS_WORKSPACE_CONFIG=:4096:8, float32 matmul precision "highest" (TF32 tiltva).
+
+### Parancsok
+    uv run python -m tests.test_model
+    uv run python -m tests.test_data
+    uv run python experiments/EXP001/train.py --config experiments/EXP001/config.yaml --seed {0,1,2}
+    uv run python experiments/EXP001/train.py --config experiments/EXP001/config.yaml --seed 0 --tag rerun
+    cmp experiments/EXP001/results/seed0/metrics.csv experiments/EXP001/results/seed0_rerun/metrics.csv
+
+### Eredmények
+| seed | train acc ≥ 0.99 | test acc ≥ 0.99 | végső test acc |
+|---|---|---|---|
+| 0 | 200 | 10400 | 1.0000 |
+| 1 | 200 | 8500 | 1.0000 |
+| 2 | 200 | 10900 | 1.0000 |
+
+- 0. lépés loss: 4.761 / 4.774 / 4.767 (előrejelzés: ≈ ln 114 = 4.736) ✓
+- A memorizációs fázisban a test loss ~24–25-re nőtt (≈ 5× a véletlen szint).
+- A test loss már ~2–3 ezer lépéstől csökkent, miközben a test acc lassan nőtt;
+  az acc-ugrás kb. 8–11 ezer lépésnél történt.
+- seed0 és seed0_rerun: metrics.csv bit-azonos, végső súly-hash azonos (8085b4b645d6).
+
+### Értelmezés
+- **H001: SUPPORTED** (3/3 seed, csak erre a konfigurációra).
+- A lefutás a "grokking" mintát követi (gyors memorizáció, késleltetett generalizáció).
+- A memorizáló modell a nem látott párokon magabiztosan téved (test loss ≫ véletlen).
+- A test loss fokozatos csökkenése az acc-ugrás előtt összhangban van azzal az
+  irodalmi állítással (Nanda et al. 2023), hogy a generalizáló megoldás fokozatosan
+  épül fel — ezt a belső struktúra mérésével NEM ellenőriztük.
+
+### Bizonytalanság
+- 3 seed, 1 felosztás, 1 konfiguráció; 100 lépéses felbontás.
+- Késői fázis: seed0 test loss lassan nő (5.3e-7 → 7.2e-7), seed2 a végén kissé
+  megugrik. ~1e-7 szinten a float32 logit-pontosság számít — nem tudjuk, érdemi-e.
+- A determinizmus csak azonos gépen / szoftverkörnyezetben igazolt.
+
+### Következő lépés
+A betanított modell belsejének vizsgálata: H002 preregisztrálása
+(az embeddingek szerkezete), majd kauzális teszt.
