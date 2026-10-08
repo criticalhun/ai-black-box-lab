@@ -1,0 +1,32 @@
+=== H002: preregistered test ===
+criterion: final top-8 share >= 0.7 (all runs), control < 0.3
+seed3  control 0.163 | final 0.987 | const 0.000 | top-8 freqs [9, 19, 30, 36, 38, 41, 52, 56]
+seed4  control 0.161 | final 0.995 | const 0.000 | top-8 freqs [8, 16, 18, 27, 31, 36, 41, 50]
+seed5  control 0.165 | final 0.990 | const 0.000 | top-8 freqs [6, 7, 12, 24, 41, 46, 48, 53]
+VERDICT: SUPPORTED (3/3 runs >= 0.7)
+
+=== EXPLORATORY: top-k share during training (not part of verdict) ===
+  step | seed3: share  test_acc | seed4: share  test_acc | seed5: share  test_acc
+     0 | seed3: 0.163  0.008   | seed4: 0.161  0.009   | seed5: 0.165  0.009  
+  2000 | seed3: 0.272  0.088   | seed4: 0.285  0.060   | seed5: 0.228  0.015  
+  4000 | seed3: 0.345  0.136   | seed4: 0.395  0.179   | seed5: 0.265  0.025  
+  6000 | seed3: 0.497  0.375   | seed4: 0.778  1.000   | seed5: 0.305  0.045  
+  8000 | seed3: 0.880  1.000   | seed4: 0.979  1.000   | seed5: 0.357  0.081  
+ 10000 | seed3: 0.983  1.000   | seed4: 0.990  1.000   | seed5: 0.448  0.238  
+ 12000 | seed3: 0.990  1.000   | seed4: 0.991  1.000   | seed5: 0.705  0.949  
+ 14000 | seed3: 0.992  1.000   | seed4: 0.991  1.000   | seed5: 0.976  1.000  
+ 16000 | seed3: 0.992  1.000   | seed4: 0.992  1.000   | seed5: 0.992  1.000  
+ 18000 | seed3: 0.992  1.000   | seed4: 0.992  1.000   | seed5: 0.992  1.000  
+ 20000 | seed3: 0.992  1.000   | seed4: 0.992  1.000   | seed5: 0.992  1.000  
+ 22000 | seed3: 0.992  1.000   | seed4: 0.993  1.000   | seed5: 0.993  1.000  
+ 24000 | seed3: 0.992  1.000   | seed4: 0.993  1.000   | seed5: 0.992  1.000  
+ 26000 | seed3: 0.992  1.000   | seed4: 0.993  1.000   | seed5: 0.990  1.000  
+ 28000 | seed3: 0.992  1.000   | seed4: 0.994  1.000   | seed5: 0.990  1.000  
+ 30000 | seed3: 0.992  1.000   | seed4: 0.994  1.000   | seed5: 0.990  1.000  
+ 32000 | seed3: 0.992  1.000   | seed4: 0.994  1.000   | seed5: 0.990  1.000  
+ 34000 | seed3: 0.992  1.000   | seed4: 0.994  1.000   | seed5: 0.990  1.000  
+ 36000 | seed3: 0.992  1.000   | seed4: 0.994  1.000   | seed5: 0.990  1.000  
+ 38000 | seed3: 0.991  1.000   | seed4: 0.995  1.000   | seed5: 0.990  1.000  
+ 40000 | seed3: 0.987  1.000   | seed4: 0.995  1.000   | seed5: 0.990  1.000  
+
+saved -> experiments/EXP006/results

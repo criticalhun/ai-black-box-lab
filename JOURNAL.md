@@ -281,3 +281,38 @@ Kód: experiments/EXP001/train.py (változatlan).
 ### Értelmezés
 H001 replikáció: SUPPORTED. Hat seeden (0–5) az általánosítás 5700–12400 lépésnél.
 Ezek a modellek a H002–H007 megerősítő tesztjeinek tárgyai.
+
+## 2026-10-08 — EXP006–EXP008: megerősítő tesztek friss seedeken (3, 4, 5)
+
+### Módszer
+Hipotézisek: H004–H007 preregisztrálva commit 47c4f4d-ben, a modellek tanítása ELŐTT.
+Replikációk: EXP002/EXP003 scriptjei változatlanul, új configgal (diff ellenőrizve).
+Új eszköz: 2D Fourier-osztály kivetítése az MLP-aktivációkból hookkal
+(kalibráció: tests/test_class_ablation.py, hiba ~1e-13, no-op hook Δ = 0). Kód: da0d646.
+
+### Eredmények
+| hipotézis | ítélet | lényeg |
+|---|---|---|
+| H002 repl. | SUPPORTED | top-8 arány 0.987–0.995 (kontroll ~0.16) |
+| H003 repl. | SUPPORTED | szükségesség acc ≤ 0.012, elégségesség 1.0 |
+| H004 | PARTIAL 2/3 | seed5 két feje 0.21-gyel figyel "="-re |
+| H005 | SUPPORTED | 100% neuron nagy frekvencián; same_freq 0.20–0.23 (init 0.001) |
+| H006 | PARTIAL 2/3 | R² 0.884 / 0.969 / 0.959; minden α > 0 |
+| H007 | SUPPORTED | same_freq ki → acc 0.025–0.046; a_only+b_only ki → acc 1.0 |
+
+### Értelmezés
+- Az EXP002–003 eredményei friss modelleken is megismétlődtek.
+- H007 (kauzális, preregisztrált, friss adaton): a neuron-variancia ~3/4-e
+  (egyváltozós tagok) nem kell a kimenethez; a szorzat-tagok (same_freq) szükségesek.
+- A logitok Σ α cos(w(a+b−c)) alakja a variancia 88–97%-át írja le — erős, de nem teljes.
+
+### Bizonytalanság
+- Szűk tartalékok: H007 seed4 0.0455 (küszöb 0.05), H006 seed3 0.884 (küszöb 0.90).
+- same_freq nélkül acc 0.025–0.046 > véletlen (0.009): valami kevés más úton is átjut.
+- A "nagy frekvencia" 0.10-es határa éles: seed5 k=53 (0.102) funkcionálisan inkább közepes.
+
+### Nyitott kérdések / lehetséges következő hipotézisek
+- Attention: to_a ≈ to_b minden fejben (24/24, ±0.002) — nem tesztelt, új hipotézis.
+- Hogyan oltódnak ki az egyváltozós tagok a kimenet felé (W_out · W_U)?
+- Mi viszi a maradék információt, ha a same_freq tagokat kivesszük?
+- Közepes frekvenciák szerepe (EXP004 nyitott kérdés a).

@@ -1,0 +1,256 @@
+{
+  "experiment": "EXP006",
+  "hypothesis": "H002-replication",
+  "git_commit": "da0d646ccb035950e6386706bd5503a064cc9238",
+  "verdict": "SUPPORTED",
+  "n_pass": 3,
+  "threshold_final": 0.7,
+  "threshold_control_max": 0.3,
+  "top_k": 8,
+  "runs": {
+    "seed3": {
+      "final": {
+        "top_k_share": 0.9871460449751903,
+        "top_k_freqs": [
+          9,
+          19,
+          30,
+          36,
+          38,
+          41,
+          52,
+          56
+        ],
+        "const_share": 5.951414260706944e-05
+      },
+      "control": {
+        "top_k_share": 0.16306888291706337,
+        "top_k_freqs": [
+          17,
+          20,
+          22,
+          30,
+          43,
+          50,
+          51,
+          52
+        ],
+        "const_share": 0.009345293935514367
+      },
+      "final_top10_freq_share": [
+        [
+          38,
+          0.2543
+        ],
+        [
+          52,
+          0.1936
+        ],
+        [
+          30,
+          0.1707
+        ],
+        [
+          36,
+          0.1567
+        ],
+        [
+          19,
+          0.149
+        ],
+        [
+          41,
+          0.0521
+        ],
+        [
+          56,
+          0.0079
+        ],
+        [
+          9,
+          0.0029
+        ],
+        [
+          18,
+          0.0021
+        ],
+        [
+          53,
+          0.0015
+        ]
+      ]
+    },
+    "seed4": {
+      "final": {
+        "top_k_share": 0.9945890798609317,
+        "top_k_freqs": [
+          8,
+          16,
+          18,
+          27,
+          31,
+          36,
+          41,
+          50
+        ],
+        "const_share": 1.201086224468675e-05
+      },
+      "control": {
+        "top_k_share": 0.1606933467902922,
+        "top_k_freqs": [
+          8,
+          14,
+          19,
+          40,
+          41,
+          51,
+          54,
+          55
+        ],
+        "const_share": 0.012292570096385683
+      },
+      "final_top10_freq_share": [
+        [
+          8,
+          0.2921
+        ],
+        [
+          18,
+          0.2644
+        ],
+        [
+          41,
+          0.2575
+        ],
+        [
+          27,
+          0.1731
+        ],
+        [
+          36,
+          0.0031
+        ],
+        [
+          16,
+          0.0026
+        ],
+        [
+          31,
+          0.001
+        ],
+        [
+          50,
+          0.0007
+        ],
+        [
+          54,
+          0.0006
+        ],
+        [
+          9,
+          0.0004
+        ]
+      ]
+    },
+    "seed5": {
+      "final": {
+        "top_k_share": 0.9896389188288789,
+        "top_k_freqs": [
+          6,
+          7,
+          12,
+          24,
+          41,
+          46,
+          48,
+          53
+        ],
+        "const_share": 0.00013361479567312092
+      },
+      "control": {
+        "top_k_share": 0.1645937528067648,
+        "top_k_freqs": [
+          5,
+          7,
+          12,
+          24,
+          34,
+          42,
+          46,
+          51
+        ],
+        "const_share": 0.007615340651551924
+      },
+      "final_top10_freq_share": [
+        [
+          7,
+          0.3757
+        ],
+        [
+          24,
+          0.247
+        ],
+        [
+          6,
+          0.241
+        ],
+        [
+          53,
+          0.1025
+        ],
+        [
+          46,
+          0.0082
+        ],
+        [
+          48,
+          0.0075
+        ],
+        [
+          12,
+          0.0054
+        ],
+        [
+          41,
+          0.0023
+        ],
+        [
+          14,
+          0.002
+        ],
+        [
+          39,
+          0.0015
+        ]
+      ]
+    }
+  },
+  "config": {
+    "experiment": "EXP006",
+    "hypothesis": "H002-replication",
+    "source": {
+      "experiment": "EXP005",
+      "runs": [
+        "seed3",
+        "seed4",
+        "seed5"
+      ],
+      "final_checkpoint": "step040000.pt",
+      "control_checkpoint": "step000000.pt"
+    },
+    "analysis": {
+      "matrix": "W_E",
+      "rows": [
+        0,
+        113
+      ],
+      "basis": "real_fourier_orthonormal",
+      "top_k": 8,
+      "threshold_final": 0.7,
+      "threshold_control_max": 0.3
+    },
+    "exploratory": {
+      "trajectory_every": 1000
+    }
+  }
+}
