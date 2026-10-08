@@ -1,7 +1,7 @@
 # EXP002 — Fourier-szerkezet az EXP001 embeddingjeiben
 
 **Hipotézis:** H002
-**Státusz:** PREREGISTERED (még nem futott)
+**Státusz:** COMPLETED (2026-10-08) — H002 SUPPORTED
 
 ## Cél
 Megvizsgálni, hogy a betanított modellek számembeddingjei Fourier-bázisban

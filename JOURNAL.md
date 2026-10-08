@@ -117,3 +117,51 @@ CUBLAS_WORKSPACE_CONFIG=:4096:8, float32 matmul precision "highest" (TF32 tiltva
 ### Következő lépés
 A betanított modell belsejének vizsgálata: H002 preregisztrálása
 (az embeddingek szerkezete), majd kauzális teszt.
+
+## 2026-10-08 — EXP002 → H002
+
+### Cél
+Megnézni, hogy a betanított modellek számembeddingjei Fourier-bázisban koncentráltak-e.
+
+### Hipotézis
+H002: végső W_E[0:113] energiájának ≥ 70%-a a top-8 nem-konstans frekvencián (3/3 seed),
+kontroll (init) < 0.30.
+
+### Módszer
+Preregisztráció: commit abbd0b9 (a spektrumok kiszámolása ELŐTT).
+Mérőeszköz: src/fourier.py, kalibrálva (tests/test_fourier.py: véletlen ≈ 0.162,
+ismert {5,17} szerkezet visszanyerve). Elemzés: commit 98843a4.
+Integritás: minden checkpoint hash-e egyezik az EXP001 summary.json-nal.
+
+### Parancsok
+    uv run python -m tests.test_fourier
+    uv run python experiments/EXP002/analyze.py --config experiments/EXP002/config.yaml
+
+### Eredmények
+| seed | kontroll | végső top-8 | top-8 frekvenciák |
+|---|---|---|---|
+| 0 | 0.160 | 0.994 | 9, 18, 19, 28, 30, 33, 38, 47 |
+| 1 | 0.160 | 0.995 | 10, 20, 23, 27, 31, 41, 51, 54 |
+| 2 | 0.162 | 0.996 | 1, 2, 4, 9, 17, 18, 27, 56 |
+
+Konstans komponens aránya: ~0.000 mindhárom seednél.
+Exploratív (results/trajectory.csv): a top-8 arány már 2000 lépésnél ~0.24–0.26,
+6000-nél 0.32–0.41, a test acc ugrása előtt; az elsőként generalizáló seed (1)
+koncentrációja nőtt leggyorsabban, az utolsóé (2) leglassabban; a koncentráció a
+100% test acc után is nőtt (seed0: 0.926 @12k → 0.991 @18k).
+
+### Értelmezés
+- **H002: SUPPORTED.** Az embeddingek erősen Fourier-ritkák.
+- A seedek különböző frekvenciákat választanak — összhangban azzal, hogy Z_113-ban
+  nincs kitüntetett nem-nulla frekvencia (magyarázat, nem mérés).
+- Exploratív: a Fourier-struktúra fokozatosan épül és megelőzi az acc-ugrást;
+  az ugrás után is "tisztul". Összhangban Nanda et al. 2023-mal — 3 seed korrelációja,
+  nem ok-okozat.
+
+### Bizonytalanság
+- Nem tudjuk, hány frekvencia "igazán" fontos a 8-ból (szándékosan nem néztük a
+  H003 rögzítése előtt).
+- A koncentráció nem bizonyítja, hogy a modell használja ezeket a frekvenciákat.
+
+### Következő lépés
+H003: kauzális teszt — kulcsfrekvenciák eltávolítása / megtartása W_E-ben, kontrollal.
