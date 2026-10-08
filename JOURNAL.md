@@ -165,3 +165,58 @@ koncentrációja nőtt leggyorsabban, az utolsóé (2) leglassabban; a koncentr�
 
 ### Következő lépés
 H003: kauzális teszt — kulcsfrekvenciák eltávolítása / megtartása W_E-ben, kontrollal.
+
+## 2026-10-08 — EXP003 → H003
+
+### Cél
+Kauzális teszt: a modell valóban a W_E kulcsfrekvenciáira támaszkodik-e?
+
+### Hipotézis
+H003: top-8 eltávolítása → test acc ≤ 0.05; csak top-8 + konstans → ≥ 0.99;
+alapvonal és 10 véletlen kontroll-húzás ≥ 0.99.
+
+### Módszer
+Preregisztráció: commit 430aa5c. Kód + kalibráció: commit a4b43f6.
+Beavatkozás: pontos ortogonális vetítés Fourier-bázisban W_E[0:113]-on (másolaton),
+kiértékelés CPU-n a test spliten. Kalibráció: kivett frekvencia energiája
+1.6e4 → 2e-27, a többi frekvencia és minden más súly változatlan.
+
+### Parancsok
+    uv run python -m tests.test_ablation
+    uv run python experiments/EXP003/run.py --config experiments/EXP003/config.yaml
+
+### Eredmények
+| seed | alapvonal | szükségesség acc (loss) | elégségesség acc | kontroll min |
+|---|---|---|---|---|
+| 0 | 1.0000 | 0.0085 (27) | 1.0000 | 1.0000 |
+| 1 | 1.0000 | 0.0100 (75) | 1.0000 | 1.0000 |
+| 2 | 1.0000 | 0.0096 (29) | 1.0000 | 1.0000 |
+
+Exploratív:
+- Energiaeloszlás a top-8-on belül: seed0 4 nagy (9,19,30,33) + 1 közepes (47);
+  seed1 3 nagy (27,10,31) + 1 közepes (51); seed2 4 nagy (2,17,9,56) + 1 közepes (1);
+  a maradék ≤ 0.007.
+- Egy nagy frekvencia kivétele: acc 0.14–0.69; 3–4 nagy együtt → véletlen szint.
+- Közepes frekvencia kivétele: acc ~1.0, de loss ~1e-7 → ~1e-3.
+- Kis energiájú "kulcs" frekvenciák kivétele: hatástalan (loss sem változik).
+- Az energia-sorrend nem pontosan egyezik a kauzális fontossággal
+  (pl. seed0: k=30 kivétele többet árt, mint k=19-é, kisebb energia mellett).
+
+### Értelmezés
+- **H003: SUPPORTED** — a kulcsfrekvenciák halmaza kauzálisan szükséges és
+  embedding-szinten elégséges.
+- A ténylegesen használt frekvenciák száma 3–5 seedenként; a H002 K=8-a bőkezű volt.
+- A frekvenciák részben redundánsan, összeadódva hatnak. Lehetséges magyarázat
+  (irodalom, NEM mért): minden frekvencia cos(w(a+b−c)) tagot ad a logitokhoz,
+  a helyes válasznál konstruktív interferenciával.
+- Az energia jó, de nem tökéletes mutatója a funkcionális fontosságnak.
+
+### Bizonytalanság
+- Hiányzik az azonos energiájú, nem-Fourier irányú kontroll.
+- Csak embedding-szintű eredmény; az attention/MLP számítását nem vizsgáltuk.
+- Mindhárom vizsgálat (EXP002–003) ugyanazon a 3 seeden történt, amelyeken
+  exploráltunk is → a további megerősítő tesztekhez friss seedek kellenek.
+
+### Következő lépés
+Exploratív vizsgálat az attention és az MLP működéséről (hipotézis-generálás),
+majd megerősítő teszt friss seedeken.

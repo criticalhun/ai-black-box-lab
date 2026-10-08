@@ -1,7 +1,7 @@
 # EXP003 — Kulcsfrekvenciák ablációja az embeddingben
 
 **Hipotézis:** H003
-**Státusz:** PREREGISTERED (még nem futott)
+**Státusz:** COMPLETED (2026-10-08) — H003 SUPPORTED
 
 ## Cél
 Kauzális teszt: a modell valóban a W_E kulcsfrekvenciáira támaszkodik-e?
