@@ -12,7 +12,7 @@ a belső működésről.
 Ismert, publikált mechanizmus van rá (Nanda et al., 2023, "Progress measures
 for grokking via mechanistic interpretability"). Ez kalibrációs pont: ha a
 későbbi elemző eszközeink nem találják meg az ismert mechanizmust,
-az eszközeinkben van a hiba. A sima (nem moduláris) összeadás: EXP002.
+az eszközeinkben van a hiba. A sima (nem moduláris) összeadás: egy későbbi EXP (az EXP002 a modell elemzése lett).
 
 ## Feladat
 Bemenet: `[a, b, =]`, cél: `(a + b) mod 113`. Minden szám egyetlen token.
