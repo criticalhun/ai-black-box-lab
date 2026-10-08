@@ -1,0 +1,19 @@
+=== EXP012: confirmatory tests on FRESH seeds 6–8 ===
+
+##### seed6
+H008 PASS | kappa final: univariate 0.0131, same_freq 20.64, cross 1.70 | init: univariate 1.0687, same_freq 1.0090 (control ok)
+H009 PASS | total margin +67.07 | mlp:same_freq margin share 0.9722 | univariate norm share 0.0013
+
+##### seed7
+H008 PASS | kappa final: univariate 0.0400, same_freq 27.32, cross 2.23 | init: univariate 0.9436, same_freq 0.9921 (control ok)
+H009 PASS | total margin +46.13 | mlp:same_freq margin share 0.9536 | univariate norm share 0.0027
+
+##### seed8
+H008 PASS | kappa final: univariate 0.0222, same_freq 58.43, cross 3.08 | init: univariate 0.9710, same_freq 0.9584 (control ok)
+H009 PASS | total margin +92.74 | mlp:same_freq margin share 0.9690 | univariate norm share 0.0008
+
+=== VERDICTS ===
+H008: SUPPORTED
+H009: SUPPORTED
+
+saved -> experiments/EXP012/results

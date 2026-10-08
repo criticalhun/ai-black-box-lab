@@ -1,0 +1,122 @@
+{
+  "experiment": "EXP012",
+  "git_commit": "4a7a96003b40aa5583604b9d2df8de05c21d5ac9",
+  "verdicts": {
+    "H008": "SUPPORTED",
+    "H009": "SUPPORTED"
+  },
+  "runs": {
+    "seed6": {
+      "H008": {
+        "pass": true,
+        "control_ok": true,
+        "final": {
+          "a_only": 0.012982522431532952,
+          "b_only": 0.013249896117437928,
+          "univariate": 0.013116194132903165,
+          "same_freq": 20.635314787338224,
+          "cross": 1.6986718016193973
+        },
+        "init": {
+          "a_only": 1.0687785844704027,
+          "b_only": 1.0685841308975754,
+          "univariate": 1.0686815991898246,
+          "same_freq": 1.009027699772159,
+          "cross": 1.0051126969401616
+        }
+      },
+      "H009": {
+        "pass": true,
+        "total_margin": 67.06836398235816,
+        "mlp_same_freq_margin_share": 0.9721515392796793,
+        "univariate_norm_share": 0.001264267928334517
+      }
+    },
+    "seed7": {
+      "H008": {
+        "pass": true,
+        "control_ok": true,
+        "final": {
+          "a_only": 0.0400312412840284,
+          "b_only": 0.039912321871440844,
+          "univariate": 0.03997178482762643,
+          "same_freq": 27.320994807989468,
+          "cross": 2.2253722234039697
+        },
+        "init": {
+          "a_only": 0.9436580993090248,
+          "b_only": 0.9436060034147682,
+          "univariate": 0.9436322344806856,
+          "same_freq": 0.9921055913736834,
+          "cross": 0.9953345844154017
+        }
+      },
+      "H009": {
+        "pass": true,
+        "total_margin": 46.13390312177445,
+        "mlp_same_freq_margin_share": 0.9535877749166496,
+        "univariate_norm_share": 0.002666028533216588
+      }
+    },
+    "seed8": {
+      "H008": {
+        "pass": true,
+        "control_ok": true,
+        "final": {
+          "a_only": 0.022346703986586457,
+          "b_only": 0.022133383416846328,
+          "univariate": 0.022240092607346017,
+          "same_freq": 58.425080165965674,
+          "cross": 3.0832263544175413
+        },
+        "init": {
+          "a_only": 0.9708222070807145,
+          "b_only": 0.9712495193960557,
+          "univariate": 0.9710335091835073,
+          "same_freq": 0.9584495318185821,
+          "cross": 0.9864819616857877
+        }
+      },
+      "H009": {
+        "pass": true,
+        "total_margin": 92.73759195246124,
+        "mlp_same_freq_margin_share": 0.9689748352762059,
+        "univariate_norm_share": 0.0007858091379930408
+      }
+    }
+  },
+  "config": {
+    "experiment": "EXP012",
+    "hypotheses": [
+      "H008",
+      "H009"
+    ],
+    "source": {
+      "experiment": "EXP011",
+      "runs": [
+        "seed6",
+        "seed7",
+        "seed8"
+      ],
+      "checkpoint": "step040000.pt",
+      "control_checkpoint": "step000000.pt"
+    },
+    "evaluation": {
+      "inputs": "all_pairs",
+      "device": "cpu"
+    },
+    "H008": {
+      "univariate_max_kappa": 0.25,
+      "same_freq_min_kappa": 10.0,
+      "control_kappa_range": [
+        0.8,
+        1.2
+      ]
+    },
+    "H009": {
+      "min_total_margin": 1.0,
+      "mlp_same_freq_min_margin_share": 0.85,
+      "univariate_max_norm_share": 0.05
+    }
+  }
+}

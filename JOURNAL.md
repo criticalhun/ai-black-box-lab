@@ -361,3 +361,24 @@ miért nem kellenek az egyváltozós tagok a kimenethez (H007).
 A tervezett H010 (attention: to_a ≈ to_b, ±0.01) elvetve a rögzítés ELŐTT: a betanítatlan
 modell is teljesítette (0.0096) → nem informatív. Erősebb változat (csere-szimmetria) később,
 előbb exploratívan.
+
+## 2026-10-08 — EXP011–EXP012: H008–H009 megerősítés friss seedeken (6, 7, 8)
+
+### Módszer
+H008–H009 küszöbei ÉS az elemző kód (EXP012/confirm.py) commit 4a7a960-ban, a seed 6–8
+tanítása ELŐTT. Tanítás: EXP001/train.py, EXP011 config (diff: 3 sor).
+
+### Eredmények
+- H001 (2. replikáció): test ≥ 0.99 először 8400 / 8400 / 5400 → SUPPORTED.
+- H008: kappa egyváltozós 0.013 / 0.040 / 0.022; same_freq 20.6 / 27.3 / 58.4;
+  init kontroll 0.94–1.07 → SUPPORTED.
+- H009: mlp:same_freq margin-arány 0.972 / 0.954 / 0.969; egyváltozós norma ≤ 0.0027 → SUPPORTED.
+
+### Megfigyelés (nem vizsgált)
+seed6: a 38000. lépésnél loss-kiugrás (train 4.6e-4, test 8.1e-4), acc végig 1.0,
+40000-re visszaállt. Kisebb késői kilengések korábban is (seed0, 2, 5). Lehetséges
+"slingshot"-jellegű instabilitás — nem teszteltük.
+
+### Értelmezés
+A kiolvasási lépés (kioltás/erősítés) friss modelleken is megismétlődött, nagy tartalékkal.
+A teljes mechanizmus összefoglalója: FINDINGS.md.
