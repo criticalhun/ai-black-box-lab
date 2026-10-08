@@ -1,0 +1,11 @@
+experiment: EXP004
+hypothesis: null          # EXPLORATÍV — nincs tesztelt hipotézis, nincs ítélet
+source:
+  experiment: EXP001
+  runs: [seed0, seed1, seed2]
+  checkpoint: step040000.pt
+  control_checkpoint: step000000.pt   # init (kontroll)
+key_frequencies_from: EXP002   # top-8 seedenként (csak címkézéshez)
+evaluation:
+  inputs: all_pairs        # mind a 113² (a, b) pár
+  device: cpu
