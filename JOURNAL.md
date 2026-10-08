@@ -220,3 +220,46 @@ Exploratív:
 ### Következő lépés
 Exploratív vizsgálat az attention és az MLP működéséről (hipotézis-generálás),
 majd megerősítő teszt friss seedeken.
+
+## 2026-10-08 — EXP004 (EXPLORATÍV) — attention, MLP, logitok
+
+### Cél
+Hipotézis-generálás: mit csinál az attention, az MLP és a kimenet. Nincs ítélet.
+
+### Módszer
+Kód + kalibráció (tests/test_fourier2d.py): commit 68943e8. Mind a 113² bemenet,
+CPU, végső modell + saját init-modell (kontroll), checkpoint-hash ellenőrzéssel.
+
+### Reprodukálhatóság
+A seed0 init-oszlop pontosan egyezett egy másik gépen (Claude sandbox, CPU)
+előre kiszámolt értékekkel (dead 72, a_only 0.487, b_only 0.481, same_freq 0.001,
+cross 0.031, top-8 0.143).
+
+### Megfigyelések (végső vs init)
+- Attention "=" pozícióról: minden fej átl. ~0.50 a-ra, ~0.50 b-re, ~0.002 "="-re
+  (kivétel: seed2 head1 "=": 0.088); szórás 0.23–0.31. Init: ~1/3 mindenhová.
+- Halott neuronok: init 71–82 → végső 0.
+- Neuron-variancia: a_only 0.375–0.389, b_only 0.375–0.389, same_freq 0.20–0.23
+  (init 0.001), cross ~0.02. Top-8 frekvencián: 0.97–0.98 (init 0.14–0.17).
+- Mind az 512 neuron domináns frekvenciája egy NAGY kulcsfrekvencia; egy neuron
+  varianciájának 84–97%-a egy frekvencián van.
+  seed0: 9:176, 33:129, 30:107, 19:100 | seed1: 27:264, 10:132, 31:116 |
+  seed2: 17:143, 2:130, 56:122, 9:117
+- Logit-illesztés Σ α_k cos(w_k(a+b−c)): R² 0.949 / 0.987 / 0.980 (init 0.000);
+  a nagy frekvenciák α_k-ja mind pozitív (9–60), a többié ~0.
+
+### Nyitott kérdések
+- (a) A közepes energiájú frekvenciák (47 / 51 / 1) kivétele rontotta a loss-t
+  (EXP003), de egyik neuronnak sem dominánsak, és α ≈ 0. Hogyan hatnak?
+- (b) Az α nagysága nem követi az ablation-kárt (seed0: k=33 nagy α, sok neuron,
+  mégis a legkisebb kár).
+
+### Értelmezés (NEM bizonyított)
+- A tanítás szorzat-tagokat (same_freq) hozott létre az MLP-ben, amelyek a
+  cos(w(a+b)) számításához kellenek.
+- Az a_only/b_only tagok nagy része valószínűleg nem jut el a logitokig
+  (a logitok csak a+b−c függvényei) → kauzálisan tesztelendő.
+- A logitok konstruktív interferenciás alakja illeszkedik (korreláció, nem beavatkozás).
+
+### Következő lépés
+Hipotézisek rögzítése a fenti megfigyelésekből, tesztelés FRISS seedeken (3, 4, 5).

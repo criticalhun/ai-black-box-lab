@@ -1,7 +1,7 @@
 # EXP004 — Attention, MLP-neuronok és logitok (EXPLORATÍV)
 
 **Hipotézis:** nincs — ez a kísérlet hipotézist GENERÁL, nem tesztel.
-**Státusz:** nem futott
+**Státusz:** COMPLETED (2026-10-08) — exploratív, ítélet nélkül
 
 ## Cél
 Megnézni, mit csinál az attention a "=" pozíción, milyen 2D Fourier-szerkezetük van
