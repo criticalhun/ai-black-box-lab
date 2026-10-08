@@ -1,7 +1,7 @@
 # EXP005 — Friss modellek (seed 3, 4, 5) megerősítő tesztekhez
 
 **Hipotézis:** H001 replikáció (ugyanaz a kritérium, mint az EXP001-ben)
-**Státusz:** PREREGISTERED (még nem futott)
+**Státusz:** COMPLETED (2026-10-08) — H001 replikáció SUPPORTED (3/3)
 
 ## Cél
 Az EXP001-gyel azonos konfiguráció (csak a seedek mások), azonos kód

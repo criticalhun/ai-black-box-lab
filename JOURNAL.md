@@ -263,3 +263,21 @@ cross 0.031, top-8 0.143).
 
 ### Következő lépés
 Hipotézisek rögzítése a fenti megfigyelésekből, tesztelés FRISS seedeken (3, 4, 5).
+
+## 2026-10-08 — EXP005 → H001 replikáció (friss seedek 3, 4, 5)
+
+### Módszer
+Preregisztráció (H004–H007 + EXP005): commit 47c4f4d, a tanítás ELŐTT.
+Config = EXP001 config, csak experiment/hypothesis/seeds sor eltér (diff: 3 sor).
+Kód: experiments/EXP001/train.py (változatlan).
+
+### Eredmények
+| seed | train ≥ 0.99 | test ≥ 0.99 | végső test acc | súly-hash |
+|---|---|---|---|---|
+| 3 | 200 | 7200 | 1.0000 | bf02260cab99 |
+| 4 | 200 | 5700 | 1.0000 | a9b9f42e72c8 |
+| 5 | 200 | 12400 | 1.0000 | cbbabae1c2af |
+
+### Értelmezés
+H001 replikáció: SUPPORTED. Hat seeden (0–5) az általánosítás 5700–12400 lépésnél.
+Ezek a modellek a H002–H007 megerősítő tesztjeinek tárgyai.
