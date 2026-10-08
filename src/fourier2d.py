@@ -36,3 +36,38 @@ def per_frequency_score(E2: torch.Tensor) -> torch.Tensor:
     inner = E2[1:, 1:]
     diag = torch.diagonal(inner, dim1=0, dim2=1).movedim(-1, 0)   # [K-1, *rest]
     return E2[1:, 0] + E2[0, 1:] + diag
+
+
+CLASS_NAMES = ("const", "a_only", "b_only", "same_freq", "cross")
+
+
+def class_of_basis_pairs(p: int) -> list[list[str]]:
+    """Class name of each 2D basis function (row i of F for a, row j for b)."""
+    bf = basis_frequencies(p).tolist()
+
+    def cls(ka: int, kb: int) -> str:
+        if ka == 0 and kb == 0:
+            return "const"
+        if kb == 0:
+            return "a_only"
+        if ka == 0:
+            return "b_only"
+        return "same_freq" if ka == kb else "cross"
+
+    return [[cls(ka, kb) for kb in bf] for ka in bf]
+
+
+def project_out_classes(M: torch.Tensor, remove: set[str]) -> torch.Tensor:
+    """M: [p, p, *rest]. Remove the 2D Fourier components of the given classes
+    (exact orthogonal projection). Returns float64 on CPU."""
+    unknown = set(remove) - set(CLASS_NAMES)
+    if unknown:
+        raise ValueError(f"unknown classes: {unknown}")
+    p = M.shape[0]
+    F, _ = fourier_basis(p)
+    labels = class_of_basis_pairs(p)
+    keep = torch.tensor([[c not in remove for c in row] for row in labels], dtype=torch.float64)
+    M = M.detach().cpu().to(torch.float64)
+    C = torch.einsum("ia,jb,ab...->ij...", F, F, M)
+    C = C * keep.reshape(keep.shape + (1,) * (C.dim() - 2))
+    return torch.einsum("ia,jb,ij...->ab...", F, F, C)

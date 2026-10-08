@@ -1,0 +1,28 @@
+experiment: EXP008
+hypotheses: [H004, H005, H006, H007]
+source:
+  experiment: EXP005
+  runs: [seed3, seed4, seed5]
+  checkpoint: step040000.pt
+  control_checkpoint: step000000.pt
+major_frequency_min_share: 0.10     # H005–H007 definíció
+evaluation:
+  inputs: all_pairs                 # a hookos beavatkozás a teljes rácsot igényli
+  acc_split: test                   # a pontosságot a test spliten mérjük
+  device: cpu
+H004:
+  to_a_range: [0.40, 0.60]
+  to_b_range: [0.40, 0.60]
+  to_eq_max: 0.15
+H005:
+  min_frac_alive_dominant_in_major: 0.95
+  min_same_freq_share: 0.10
+  control_max_same_freq_share: 0.05
+H006:
+  min_r2: 0.90
+  control_max_r2: 0.05
+H007:
+  baseline_min_acc: 0.99
+  control_cross_min_acc: 0.99
+  same_freq_removed_max_acc: 0.05
+  univariate_removed_min_acc: 0.99

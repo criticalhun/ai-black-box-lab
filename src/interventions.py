@@ -6,6 +6,7 @@ import copy
 import torch
 
 from src.fourier import project_frequencies
+from src.fourier2d import project_out_classes
 from src.model import Transformer
 
 
@@ -19,3 +20,18 @@ def embed_keep_frequencies(model: Transformer, keep: set[int],
         W = m.W_E[lo:hi]
         m.W_E[lo:hi] = project_frequencies(W, keep).to(dtype=W.dtype, device=W.device)
     return m
+
+
+def mlp_class_ablation_hook(p: int, remove: set[str], pos: int = 2):
+    """Forward hook for 'blocks.0.mlp.hook_post'. Requires the batch to be the FULL
+    (a, b) grid in a-major order (N = p*p, row a*p+b). Removes the given 2D Fourier
+    classes from the activations at position `pos`; other positions untouched."""
+    def hook(act: torch.Tensor, name: str) -> torch.Tensor:
+        if act.shape[0] != p * p:
+            raise ValueError(f"{name}: batch must be the full {p}x{p} grid, got {act.shape[0]}")
+        A = act[:, pos, :].reshape(p, p, -1)
+        A2 = project_out_classes(A, remove).to(dtype=act.dtype, device=act.device)
+        out = act.clone()
+        out[:, pos, :] = A2.reshape(p * p, -1)
+        return out
+    return hook
