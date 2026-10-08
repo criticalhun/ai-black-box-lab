@@ -1,0 +1,10 @@
+experiment: EXP010
+hypothesis: null          # EXPLORATÍV — neuron-koherencia, nincs ítélet
+source:
+  experiment: EXP001      # felfedező modellek (seed 0–2); megerősítés később friss seedeken
+  runs: [seed0, seed1, seed2]
+  checkpoint: step040000.pt
+  control_checkpoint: step000000.pt
+evaluation:
+  inputs: all_pairs
+  device: cpu

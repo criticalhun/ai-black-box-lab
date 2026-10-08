@@ -1,0 +1,66 @@
+=== EXP009 — EXPLORATORY: direct logit attribution at '=' (no verdict) ===
+norm share = ||centered component||² / ||centered total logits||²  (shares need NOT sum to 1:
+             components can cancel each other)
+margin     = mean over (a,b) of [logit(correct c) − mean_c logit]; margins DO add up exactly
+
+##### seed0   total margin: final +46.13 | init +0.0000
+  component          norm share    margin  margin %
+  const:embed+pos        0.0061     +0.00      0.0%
+  const:mlp_bias         0.0000     +0.00      0.0%
+  attn:const             0.0010     +0.00      0.0%
+  mlp:const              0.0016     +0.00      0.0%
+  attn:a_only            0.0014     +0.00      0.0%
+  mlp:a_only             0.0074     +0.00      0.0%
+  attn:b_only            0.0014     +0.00      0.0%
+  mlp:b_only             0.0074     +0.00      0.0%
+  attn:same_freq         0.0026     +1.72      3.7%
+  mlp:same_freq          0.9005    +44.41     96.3%
+  attn:cross             0.0001     -0.00     -0.0%
+  mlp:cross              0.0122     +0.00      0.0%
+  GROUP              joint share    margin  margin %  Σ indiv. share
+  constant               0.0033     +0.00      0.0%          0.0087
+  univariate             0.0135     +0.00      0.0%          0.0176
+  same_freq              0.9706    +46.13    100.0%          0.9031
+  cross                  0.0127     +0.00      0.0%          0.0123
+
+##### seed1   total margin: final +91.57 | init -0.0001
+  component          norm share    margin  margin %
+  const:embed+pos        0.0005     +0.00      0.0%
+  const:mlp_bias         0.0000     +0.00      0.0%
+  attn:const             0.0001     +0.00      0.0%
+  mlp:const              0.0006     +0.00      0.0%
+  attn:a_only            0.0004     -0.00     -0.0%
+  mlp:a_only             0.0007     -0.00     -0.0%
+  attn:b_only            0.0004     +0.00      0.0%
+  mlp:b_only             0.0007     +0.00      0.0%
+  attn:same_freq         0.0018     +3.17      3.5%
+  mlp:same_freq          0.9255    +88.40     96.5%
+  attn:cross             0.0000     -0.00     -0.0%
+  mlp:cross              0.0032     -0.00     -0.0%
+  GROUP              joint share    margin  margin %  Σ indiv. share
+  constant               0.0013     +0.00      0.0%          0.0011
+  univariate             0.0010     +0.00      0.0%          0.0023
+  same_freq              0.9943    +91.57    100.0%          0.9273
+  cross                  0.0033     -0.00     -0.0%          0.0032
+
+##### seed2   total margin: final +43.75 | init -0.0000
+  component          norm share    margin  margin %
+  const:embed+pos        0.0058     -0.00     -0.0%
+  const:mlp_bias         0.0000     +0.00      0.0%
+  attn:const             0.0013     +0.00      0.0%
+  mlp:const              0.0005     +0.00      0.0%
+  attn:a_only            0.0014     +0.00      0.0%
+  mlp:a_only             0.0024     +0.00      0.0%
+  attn:b_only            0.0014     -0.00     -0.0%
+  mlp:b_only             0.0024     -0.00     -0.0%
+  attn:same_freq         0.0033     +1.79      4.1%
+  mlp:same_freq          0.9060    +41.96     95.9%
+  attn:cross             0.0000     -0.00     -0.0%
+  mlp:cross              0.0069     -0.00     -0.0%
+  GROUP              joint share    margin  margin %  Σ indiv. share
+  constant               0.0023     -0.00     -0.0%          0.0076
+  univariate             0.0027     +0.00      0.0%          0.0077
+  same_freq              0.9877    +43.75    100.0%          0.9093
+  cross                  0.0073     -0.00     -0.0%          0.0070
+
+saved -> experiments/EXP009/results

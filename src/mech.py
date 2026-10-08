@@ -91,3 +91,36 @@ def dla_metrics(L: torch.Tensor, p: int) -> dict:
     cstar = (ar[:, None] + ar[None, :]) % p
     margin = Lc.gather(2, cstar[:, :, None]).mean().item()
     return {"norm2": (Lc ** 2).sum().item(), "margin": margin}
+
+
+def coherence(H: torch.Tensor, M: torch.Tensor) -> dict:
+    """H: [N, n] activations of n neurons over N inputs; M: [n, p] readout of each neuron
+    to the p logits. Contribution of neuron j: L_j(x, c) = H[x, j] * Mc[j, c], Mc = M centered over c.
+    joint = ||Σ_j L_j||²,  individual = Σ_j ||L_j||²,  kappa = joint / individual.
+    kappa ≈ 1: incoherent sum; << 1: neurons cancel each other; > 1: they reinforce."""
+    H = H.to(torch.float64)
+    Mc = M.to(torch.float64) - M.to(torch.float64).mean(dim=1, keepdim=True)
+    Gh, Gm = H.T @ H, Mc @ Mc.T
+    joint = (Gh * Gm).sum().item()
+    indiv = (torch.diagonal(Gh) * torch.diagonal(Gm)).sum().item()
+    return {"joint": joint, "individual": indiv, "kappa": joint / indiv if indiv > 0 else float("nan")}
+
+
+COHERENCE_GROUPS = {"a_only": {"a_only"}, "b_only": {"b_only"}, "univariate": {"a_only", "b_only"},
+                    "same_freq": {"same_freq"}, "cross": {"cross"}}
+
+
+def mlp_class_coherence(model: torch.nn.Module, tokens: torch.Tensor, p: int) -> dict:
+    """Coherence of the MLP neurons' direct logit contributions, per 2D Fourier class."""
+    from src.fourier2d import CLASS_NAMES, project_out_classes
+
+    with torch.no_grad():
+        _, cache = model.run_with_cache(tokens)
+    h = cache[R + "mlp.hook_post"][:, 2].to(torch.float64).reshape(p, p, -1)
+    M = (model.blocks[0].mlp.W_out.detach().to(torch.float64)
+         @ model.W_U[:, :p].detach().to(torch.float64))                     # [d_mlp, p]
+    out = {}
+    for g, keep in COHERENCE_GROUPS.items():
+        hX = project_out_classes(h, set(CLASS_NAMES) - keep).reshape(p * p, -1)
+        out[g] = coherence(hX, M)
+    return out

@@ -1,7 +1,7 @@
 # EXP009 — Direct logit attribution a "=" pozíción (EXPLORATÍV)
 
 **Hipotézis:** nincs (hipotézis-generálás)
-**Státusz:** nem futott
+**Státusz:** COMPLETED (2026-10-08) — exploratív
 
 ## Kérdés
 Miért nem kell a kimenethez az MLP-aktivációk egyváltozós része (H007)?

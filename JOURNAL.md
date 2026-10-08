@@ -316,3 +316,24 @@ Replikációk: EXP002/EXP003 scriptjei változatlanul, új configgal (diff ellen
 - Hogyan oltódnak ki az egyváltozós tagok a kimenet felé (W_out · W_U)?
 - Mi viszi a maradék információt, ha a same_freq tagokat kivesszük?
 - Közepes frekvenciák szerepe (EXP004 nyitott kérdés a).
+
+## 2026-10-08 — EXP009 (EXPLORATÍV) — direct logit attribution a "=" pozíción
+
+### Módszer
+Kód + kalibráció (tests/test_dla.py: Σ komponens = logit, eltérés 6e-7): commit e334456.
+Felfedező modellek: seed 0–2. 12 additív komponens W_U-n át; centrált norma-arány + margin.
+
+### Megfigyelések
+- mlp:same_freq: logit-norma 0.90–0.93, margin 95.9–96.5%; attn:same_freq: margin 3.5–4.1%.
+- Egyváltozós (attn+mlp) logit-norma: 0.001–0.014 — a neuron-szinten mért ~0.76-hoz képest
+  ~2 nagyságrenddel kisebb. Attn és MLP között alig van kioltás (Σ indiv ≈ joint).
+- cross: 0.003–0.013, konstans: 0.001–0.003.
+
+### Módszertani hiba (saját)
+Az egyváltozós és konstans komponensek marginja matematikailag mindig 0 (rögzített a mellett
+a+b végigfut minden c-n), így ott a margin oszlop nem informatív — csak a norma.
+
+### Értelmezés
+- A helyes választ ~96%-ban az MLP szorzat-tagjai adják (DLA, nem beavatkozás).
+- Egy neuron kiolvasó vektora (W_out[n]·W_U) minden osztályra ugyanaz → az egyváltozós tagok
+  "eltűnése" csak a neuronok EGYÜTTES hatásából (kioltás) jöhet. Ezt az EXP010 méri.
