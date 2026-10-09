@@ -396,3 +396,33 @@ kritériumaival, a 2 rétegű modellek tanítása ELŐTT rögzítve. A kód vál
 
 ### Várt paraméterszám
 226 816 + egy további blokk (attention 65 536 + MLP 131 712) = 424 064.
+
+## 2026-10-09 — EXP013–EXP015 eredmények: kétrétegű modell
+
+### Eredmények
+| | seed0 | seed1 | seed2 | ítélet |
+|---|---|---|---|---|
+| H011 test ≥ 0.99 (lépés) | 7300 | 5700 | 5500 | SUPPORTED |
+| H012 top-8 arány (kontroll) | 0.992 (0.160) | 0.918 (0.160) | 0.961 (0.162) | SUPPORTED |
+| H013 szükségesség / elégségesség | 0.011 / 1.0 | 0.010 / 1.0 | 0.009 / 1.0 | SUPPORTED |
+
+Nagy frekvenciák (EXP015 exploratív): seed0 11, 19, 2 (0.31–0.34 egyenként);
+seed1 38, 54, 29, 44; seed2 27, 55, 9. A többi ≤ 0.006 — közepes frekvencia alig.
+
+### Exploratív eltérések az 1 rétegűhöz képest
+- Kezdő loss 4.87–4.95 (1 rétegű: ~4.76).
+- Erősen instabil tanítás: ismétlődő loss-kiugrások (train 1e-8 → 1e-2) az egész futás
+  alatt; seed0 a 3000. lépésnél train acc 0.81; seed0 test acc 8000–37000 között
+  0.998–0.999-en ragadt, csak a 38000. lépésnél lett 1.0.
+- Fourier-koncentráció alacsonyabb és ingadozó (seed1: 0.79 → 0.99 → 0.92); konstans
+  komponens 0.002–0.041.
+
+### Értelmezés
+- Az embedding-szintű mechanizmus (néhány Fourier-frekvencia, kauzálisan szükséges és
+  elégséges) mélyebb modellre is átvihető.
+- Az instabilitás egy lehetséges oka (NEM tesztelt): az 1 rétegűre bevált tanítási
+  beállítás (lr 1e-3, wd 1.0) a 2 rétegűnek túl agresszív.
+
+### Következő lépés
+Melyik réteg MLP-je végzi a szorzást? Exploratív vizsgálat ezeken a modelleken
+(seed 0–2 = felfedező halmaz a 2 rétegű kérdésekhez), megerősítés friss 2 rétegű seedeken.

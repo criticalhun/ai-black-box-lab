@@ -1,0 +1,32 @@
+=== H002: preregistered test ===
+criterion: final top-8 share >= 0.7 (all runs), control < 0.3
+seed0  control 0.160 | final 0.992 | const 0.002 | top-8 freqs [2, 11, 17, 19, 21, 22, 33, 56]
+seed1  control 0.160 | final 0.918 | const 0.041 | top-8 freqs [6, 21, 29, 37, 38, 44, 46, 54]
+seed2  control 0.162 | final 0.961 | const 0.016 | top-8 freqs [1, 4, 9, 27, 32, 50, 54, 55]
+VERDICT: SUPPORTED (3/3 runs >= 0.7)
+
+=== EXPLORATORY: top-k share during training (not part of verdict) ===
+  step | seed0: share  test_acc | seed1: share  test_acc | seed2: share  test_acc
+     0 | seed0: 0.160  0.007   | seed1: 0.160  0.009   | seed2: 0.162  0.007  
+  2000 | seed0: 0.248  0.088   | seed1: 0.260  0.080   | seed2: 0.277  0.117  
+  4000 | seed0: 0.333  0.170   | seed1: 0.406  0.181   | seed2: 0.427  0.247  
+  6000 | seed0: 0.482  0.402   | seed1: 0.791  1.000   | seed2: 0.800  0.993  
+  8000 | seed0: 0.784  0.999   | seed1: 0.982  1.000   | seed2: 0.940  0.994  
+ 10000 | seed0: 0.881  0.999   | seed1: 0.992  1.000   | seed2: 0.952  0.999  
+ 12000 | seed0: 0.911  0.999   | seed1: 0.954  1.000   | seed2: 0.990  1.000  
+ 14000 | seed0: 0.939  0.999   | seed1: 0.986  1.000   | seed2: 0.964  1.000  
+ 16000 | seed0: 0.944  0.998   | seed1: 0.986  1.000   | seed2: 0.993  1.000  
+ 18000 | seed0: 0.943  0.998   | seed1: 0.975  1.000   | seed2: 0.968  1.000  
+ 20000 | seed0: 0.928  0.999   | seed1: 0.941  1.000   | seed2: 0.969  1.000  
+ 22000 | seed0: 0.907  1.000   | seed1: 0.919  1.000   | seed2: 0.988  1.000  
+ 24000 | seed0: 0.934  0.999   | seed1: 0.967  1.000   | seed2: 0.956  1.000  
+ 26000 | seed0: 0.938  0.998   | seed1: 0.966  1.000   | seed2: 0.939  1.000  
+ 28000 | seed0: 0.925  0.998   | seed1: 0.974  0.995   | seed2: 0.945  1.000  
+ 30000 | seed0: 0.910  0.998   | seed1: 0.967  1.000   | seed2: 0.944  1.000  
+ 32000 | seed0: 0.913  0.998   | seed1: 0.935  1.000   | seed2: 0.952  1.000  
+ 34000 | seed0: 0.910  0.998   | seed1: 0.983  1.000   | seed2: 0.978  1.000  
+ 36000 | seed0: 0.912  0.999   | seed1: 0.950  1.000   | seed2: 0.919  1.000  
+ 38000 | seed0: 0.926  1.000   | seed1: 0.942  1.000   | seed2: 0.952  1.000  
+ 40000 | seed0: 0.992  1.000   | seed1: 0.918  1.000   | seed2: 0.961  1.000  
+
+saved -> experiments/EXP014/results

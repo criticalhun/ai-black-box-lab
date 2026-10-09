@@ -1,0 +1,70 @@
+=== H003: preregistered test (test split, CPU) ===
+criteria: baseline>=0.99, necessity<=0.05, sufficiency>=0.99, every control>=0.99
+seed0  baseline 1.0000 | necessity 0.0109 (loss 5.66e+01) | sufficiency 1.0000 (loss 4.86e-06) | controls min 1.0000 | PASS
+seed1  baseline 1.0000 | necessity 0.0097 (loss 4.02e+01) | sufficiency 1.0000 (loss 1.55e-05) | controls min 1.0000 | PASS
+seed2  baseline 1.0000 | necessity 0.0091 (loss 5.08e+01) | sufficiency 1.0000 (loss 7.46e-05) | controls min 1.0000 | PASS
+VERDICT: SUPPORTED (3/3 runs pass)
+
+=== EXPLORATORY (not part of verdict) ===
+
+seed0: key freqs by energy share: 11 (0.343), 19 (0.336), 2 (0.311), 33 (0.000), 56 (0.000), 22 (0.000), 17 (0.000), 21 (0.000)
+  dose-response (remove top-i by energy):
+    i=1  acc 0.2168  loss 2.61e+01
+    i=2  acc 0.0398  loss 4.88e+01
+    i=3  acc 0.0131  loss 5.58e+01
+    i=4  acc 0.0114  loss 5.60e+01
+    i=5  acc 0.0113  loss 5.62e+01
+    i=6  acc 0.0114  loss 5.62e+01
+    i=7  acc 0.0111  loss 5.64e+01
+    i=8  acc 0.0109  loss 5.66e+01
+  single-frequency removal:
+    k=11  acc 0.2168  loss 2.61e+01
+    k=19  acc 0.2393  loss 2.04e+01
+    k= 2  acc 0.3739  loss 7.41e+00
+    k=33  acc 1.0000  loss 4.92e-07
+    k=56  acc 1.0000  loss 4.77e-07
+    k=22  acc 1.0000  loss 4.66e-07
+    k=17  acc 1.0000  loss 6.12e-07
+    k=21  acc 1.0000  loss 5.65e-07
+
+seed1: key freqs by energy share: 38 (0.259), 54 (0.248), 29 (0.208), 44 (0.193), 37 (0.003), 21 (0.002), 46 (0.002), 6 (0.002)
+  dose-response (remove top-i by energy):
+    i=1  acc 0.2921  loss 1.40e+01
+    i=2  acc 0.0736  loss 2.59e+01
+    i=3  acc 0.0186  loss 3.75e+01
+    i=4  acc 0.0105  loss 4.01e+01
+    i=5  acc 0.0105  loss 4.02e+01
+    i=6  acc 0.0105  loss 4.02e+01
+    i=7  acc 0.0105  loss 4.02e+01
+    i=8  acc 0.0097  loss 4.02e+01
+  single-frequency removal:
+    k=38  acc 0.2921  loss 1.40e+01
+    k=54  acc 0.2651  loss 1.07e+01
+    k=29  acc 0.4296  loss 6.70e+00
+    k=44  acc 0.7446  loss 9.38e-01
+    k=37  acc 1.0000  loss 8.56e-06
+    k=21  acc 1.0000  loss 6.45e-06
+    k=46  acc 1.0000  loss 5.30e-06
+    k= 6  acc 1.0000  loss 8.50e-06
+
+seed2: key freqs by energy share: 27 (0.406), 55 (0.298), 9 (0.241), 32 (0.006), 54 (0.004), 50 (0.003), 1 (0.002), 4 (0.002)
+  dose-response (remove top-i by energy):
+    i=1  acc 0.1671  loss 2.69e+01
+    i=2  acc 0.0275  loss 4.63e+01
+    i=3  acc 0.0091  loss 5.01e+01
+    i=4  acc 0.0091  loss 5.05e+01
+    i=5  acc 0.0091  loss 5.07e+01
+    i=6  acc 0.0091  loss 5.08e+01
+    i=7  acc 0.0091  loss 5.08e+01
+    i=8  acc 0.0091  loss 5.08e+01
+  single-frequency removal:
+    k=27  acc 0.1671  loss 2.69e+01
+    k=55  acc 0.1796  loss 2.29e+01
+    k= 9  acc 0.4239  loss 3.20e+00
+    k=32  acc 1.0000  loss 1.66e-04
+    k=54  acc 1.0000  loss 4.97e-05
+    k=50  acc 1.0000  loss 3.26e-05
+    k= 1  acc 1.0000  loss 3.22e-05
+    k= 4  acc 1.0000  loss 3.11e-05
+
+saved -> experiments/EXP015/results

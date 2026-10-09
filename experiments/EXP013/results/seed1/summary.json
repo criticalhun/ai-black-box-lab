@@ -1,0 +1,94 @@
+{
+  "experiment": "EXP013",
+  "hypothesis": "H011",
+  "run": "seed1",
+  "seed": 1,
+  "data_seed": 598,
+  "split_sha256": "8de4382ea6c77b513a2850e6b5b1381e6e03cc84a26fb10896c8272c1188d7bc",
+  "n_train": 3830,
+  "n_test": 8939,
+  "n_params": 424064,
+  "max_steps": 40000,
+  "final": {
+    "step": 40000,
+    "lr": 0.001,
+    "train_loss": 8.472162894739716e-08,
+    "train_acc": 1.0,
+    "test_loss": 5.671897793675933e-06,
+    "test_acc": 1.0
+  },
+  "first_step_train_acc_ge_0.99": 200,
+  "first_step_test_acc_ge_0.99": 5700,
+  "init_state_sha256": "08bffee943be9061501bb4361fb3286de5c43950d71212dee80aa02a6439f9b7",
+  "final_state_sha256": "ed774e3770050c2bdb5ccc127ffbc77c9a11cd5d59386c13ff999a93e51149fa",
+  "wall_seconds": 563.4,
+  "git": {
+    "commit": "546cd9cabe8b5d29b7cd28610219bc46d8539ba7",
+    "dirty": false
+  },
+  "device": "cuda",
+  "gpu": "NVIDIA GeForce RTX 4060",
+  "python": "3.12.14",
+  "torch": "2.14.1+cu130",
+  "cuda_build": "13.0",
+  "cudnn": 92400,
+  "cublas_workspace_config": ":4096:8",
+  "config": {
+    "experiment": "EXP013",
+    "hypothesis": "H011",
+    "task": {
+      "name": "modular_addition",
+      "p": 113,
+      "train_fraction": 0.3,
+      "data_seed": 598
+    },
+    "model": {
+      "n_layers": 2,
+      "d_model": 128,
+      "n_heads": 4,
+      "d_head": 32,
+      "d_mlp": 512,
+      "activation": "relu",
+      "layernorm": false,
+      "attn_bias": false,
+      "mlp_bias": true,
+      "causal_mask": true,
+      "n_ctx": 3,
+      "d_vocab": 114,
+      "init": "normal_std_1_over_sqrt_d_model"
+    },
+    "training": {
+      "optimizer": "adamw",
+      "lr": 0.001,
+      "weight_decay": 1.0,
+      "betas": [
+        0.9,
+        0.98
+      ],
+      "warmup_steps": 10,
+      "max_steps": 40000,
+      "batch": "full",
+      "loss_position": -1,
+      "loss_dtype": "float64"
+    },
+    "seeds": [
+      0,
+      1,
+      2
+    ],
+    "runtime": {
+      "device": "cuda",
+      "dtype": "float32"
+    },
+    "reproducibility": {
+      "deterministic": true,
+      "cublas_workspace_config": ":4096:8",
+      "float32_matmul_precision": "highest",
+      "determinism_check": "seed 0 kétszer futtatva → végső súly-hash és metrics.csv bit-pontosan egyezik"
+    },
+    "logging": {
+      "log_every": 100,
+      "checkpoint_every": 1000
+    }
+  }
+}

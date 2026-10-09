@@ -48,3 +48,18 @@ Az attention szerepe csak részben ismert. A küszöbök előre rögzített, de 
 - Megmaradnak-e ezek a mechanizmusok nagyobb modellekben és más feladatokon?
 
 Részletek: JOURNAL.md, hypotheses/, experiments/.
+
+---
+
+# 2. fázis — kétrétegű modell (2026-10-09)
+
+Egyetlen változó: n_layers 1 → 2 (424 064 paraméter).
+
+| # | Állítás | Eredmény |
+|---|---|---|
+| H011 | A 2 rétegű modell is generalizál | SUPPORTED, 3/3 (5500–7300 lépés) |
+| H012 | Embedding: Fourier-koncentráció (top-8 ≥ 0.70) | SUPPORTED, 3/3 (0.92–0.99) |
+| H013 | A kulcsfrekvenciák szükségesek és elégségesek | SUPPORTED, 3/3 |
+
+Az embedding-szintű mechanizmus átvihető. Eltérés (exploratív): a tanítás erősen
+instabil, a koncentráció ingadozik. Nyitott: melyik réteg végzi a számítást.
