@@ -1,0 +1,29 @@
+experiment: EXP023
+hypotheses: [H026, H027]
+runs_dir: experiments/EXP023/train/results     # FRISS 2 rétegű modellek, split 598, alap-hiperparaméterek
+seeds: [9, 10, 11, 12, 13, 14, 15, 16, 17, 18, 19, 20]
+reference:                    # a hipotézist inspiráló modellek — kiírjuk, az ítéletbe NEM számítanak
+  - experiments/EXP013/results/seed0
+  - experiments/EXP013/results/seed1
+  - experiments/EXP013/results/seed2
+  - experiments/EXP017/results/seed3
+  - experiments/EXP017/results/seed4
+  - experiments/EXP017/results/seed5
+checkpoint: step040000.pt
+major_frequency_min_share: 0.10
+stuck_below_acc: 0.999        # "elakadt": végső test acc < 0.999
+exclude_below_acc: 0.90       # nem általánosított -> kizárva H026/H027-ből (számukat jelentjük)
+H026:                         # alias-margó
+  stuck_if_rel_margin_below: 0.10
+  ok_if_rel_margin_at_least: 0.15
+  min_models_a: 1
+  min_models_b: 5
+H027:                         # frekvencia-szám (a felvetett megfogalmazás)
+  max_K_stuck: 2
+  min_models: 1
+instability:
+  loss_threshold: 1.0e-3
+  buffer_steps: 1000
+explore:
+  early_steps: [1000, 2000, 3000, 5000]
+  drop_spike_window: 1000

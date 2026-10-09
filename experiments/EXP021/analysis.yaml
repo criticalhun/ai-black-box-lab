@@ -1,0 +1,21 @@
+experiment: EXP021
+hypotheses: [H023, H024]
+runs:                          # sorok = adatfelosztás, oszlopok = modell-seed (keresztezett terv)
+  "598": experiments/EXP001/results     # referencia (EXP001, már lefutott)
+  "101": experiments/EXP021/d101/results
+  "202": experiments/EXP021/d202/results
+new_splits: ["101", "202"]
+seeds: [0, 1, 2]
+checkpoint: step040000.pt
+major_frequency_min_share: 0.10
+reference_first_test_range: [5400, 12400]   # 1 rétegű, split 598, seed 0–8 (EXP001/EXP005/EXP011)
+H023:
+  acc_threshold: 0.99          # = H001 kritérium
+  min_pass: 5                  # a 6 új futásból
+  first_test_band: [3600, 18600]   # referencia-tartomány ×/÷ 1.5
+H024:
+  met_min_mean_jaccard: 0.50       # azonos seed, eltérő split
+  not_met_max_mean_jaccard: 0.20
+  control_max_cross_seed_jaccard: 0.15   # eltérő seed, azonos split; különben INVALID
+  min_valid_pairs: 6
+  model_min_acc: 0.99              # csak általánosító modell frekvenciahalmaza számít

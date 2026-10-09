@@ -543,3 +543,54 @@ A 2 rétegű modell "futár-mechanizmusa" megerősítve: a 0. réteg b-t hozza a
 seed3 háromszor lóg ki: 2 nagy frekvencia (a többinél 3–4), 0.995-ön megakadt generalizáció,
 és MLP0 kimenetének 31%-a "egyéb" frekvenciákon. Lehetséges közös ok: félbemaradt
 áramkör-kialakulás. Egyetlen modell — nem általánosítható.
+
+## 2026-10-09 23:13 CEST — PREREGISZTRÁCIÓ: EXP021–EXP024 (H023–H028)
+
+### Típus
+PREREGISZTRÁCIÓ — ez a blokk minden új futás és elemzés ELŐTT készült. Az eredmények külön,
+későbbi blokkba kerülnek; az itt rögzített predikciókat utólag nem módosítjuk.
+
+### Cél
+1. Split-variancia: eddig minden futás egyetlen felosztáson (data_seed 598) ment.
+2. A seed3-jelenség (EXP017: 2 fő frekvencia, test acc 0.9952-n megakad) falszifikálható predikcióvá emelése.
+3. A 2 rétegű tanítási instabilitás eredete (hiperparaméter vagy nem).
+
+### Kiinduló tények (javítás a felvetéshez képest)
+- A H001 kritérium a split-598-on 9/9 (1 rétegű) és 6/6 (2 rétegű) modellnél teljesült, nem 2/3-nál.
+- A seed3 a H001 küszöbét (0.99) teljesíti, de nem hibátlan: ~43 hibás pár a 8000. lépéstől
+  40 000-ig. Ezért „majdnem elég”, és nem „kevesebb frekvencia, mégis elég”.
+
+### MEGFIGYELÉS (utólagos, a meglévő naplókból; hipotézis-forrás, nem bizonyíték)
+- Azonos seednél az 1 és 2 rétegű modell W_E, W_pos, W_U és 0. blokk inicializálása bit-azonos.
+  A fő frekvenciahalmazok: seed 0–2 azonosak, seed4 Jaccard 0.75, seed5 0.14, seed3 0.00. → H024
+- Alias-margó (M3): a {28, 43} halmaznál d = ±8-nál mindkét óra majdnem körbeér
+  (S(8) = 1.955 vs 2.000). MINDEN 2 elemű halmaz relatív margója < 0.094. A többi 11 ismert
+  halmazé 0.17–0.35. → H025, H026
+
+### Hipotézisek és predikciók
+| ID | Kísérlet | Predikció (küszöb) | Véletlen / alapszint |
+|---|---|---|---|
+| H023 | EXP021 | új splitek: ≥ 5/6 futás test acc ≥ 0.99; másodlagos: általánosítási lépés 3600–18600 | 9/9 split-598-on |
+| H024 | EXP021 | azonos seed, eltérő split: Jaccard-átlag ≥ 0.50 (≤ 0.20 → nem teljesült); kontroll ≤ 0.15 | véletlen ≈ 0.03 |
+| H025 | EXP022 | seed3 hibáinak ≥ 50%-a d = ±8-nál; másodlagos ±8/±16 ≥ 70% | 0.018 / 0.036 |
+| H026 | EXP023 | m < 0.10 → elakad; m ≥ 0.15 → nem akad el | — |
+| H027 | EXP023 | elakad → K ≤ 2; K ≤ 2 → elakad | — |
+| H028 | EXP024 | wd 1.0: S(3e-4) ≤ 0.25·S(1e-3) és S(3e-3) ≥ S(1e-3) minden seedre; wd 0, lr ≤ 1e-3: 0/6 általánosít; seed3 @3e-4: M1/M2 | — |
+
+Kiértékelés: TELJESÜLT / NEM TELJESÜLT / NEM DÖNTHETŐ (+ INVALID, ha az érvényességi feltétel sérül).
+
+### Mechanizmus-jelöltek (seed3) és a döntő mérések
+- M1 init-lottó: korai top-K Jaccard magas; nincs K-csökkenés; H024 teljesül; EXP024-ben azonos seed → azonos halmaz.
+- M2 instabilitás-nyesés: K-csökkenés loss-kiugrás ±1000 lépésén belül; alacsony lr → kevesebb kiugrás, nincs K ≤ 2.
+- M3 alias-margó (a következményt magyarázza): H025, H026.
+
+### Módszer
+- Kód: src/dynamics.py (+ tests/test_dynamics.py kalibráció); minden elemző script a futások ELŐTT commitolva.
+- Tanítás: experiments/EXP001/train.py, változatlan. Az új configok sed-másolatok, a különbségeket
+  egy ellenőrző script kulcs szinten igazolja.
+- Futások: EXP021 6 × 1 rétegű (~32 perc), EXP024 15 × 2 rétegű (~2,4 óra), EXP023 12 × 2 rétegű (~1,9 óra).
+
+### Előre látható kockázatok
+- H026a/H027: ha a K ≤ 2 alapgyakorisága ~1/6, 12 modellnél ~11% az esély, hogy egy sincs → NEM DÖNTHETŐ.
+- H024: kevés pár (9), a küszöbök durvák; a vegyes sáv (0.20–0.50) szándékosan széles.
+- Az instabilitás-mérőszám a 100 lépéses naplózás felbontásától függ (a rövid kiugrások kimaradhatnak).

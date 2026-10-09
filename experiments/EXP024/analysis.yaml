@@ -1,0 +1,31 @@
+experiment: EXP024
+hypothesis: H028
+seeds: [3, 4, 5]                 # keresztezett: ugyanaz az init minden cellában (EXP017-tel is)
+cells:                           # név: [lr, weight_decay, eredmény-könyvtár]
+  lr3e-4_wd1: [3.0e-4, 1.0, experiments/EXP024/lr3e-4_wd1/results]
+  lr1e-3_wd1: [1.0e-3, 1.0, experiments/EXP017/results]      # ALAP — már lefutott (EXP017), nem futtatjuk újra
+  lr3e-3_wd1: [3.0e-3, 1.0, experiments/EXP024/lr3e-3_wd1/results]
+  lr3e-4_wd0: [3.0e-4, 0.0, experiments/EXP024/lr3e-4_wd0/results]
+  lr1e-3_wd0: [1.0e-3, 0.0, experiments/EXP024/lr1e-3_wd0/results]
+  lr3e-3_wd0: [3.0e-3, 0.0, experiments/EXP024/lr3e-3_wd0/results]
+baseline_cell: lr1e-3_wd1
+checkpoint: step040000.pt
+major_frequency_min_share: 0.10
+stuck_below_acc: 0.999
+instability:
+  loss_threshold: 1.0e-3
+  buffer_steps: 1000
+H028a:                           # wd = 1.0 mellett az instabilitás lr-függő
+  low_cell: lr3e-4_wd1
+  high_cell: lr3e-3_wd1
+  low_max_ratio: 0.25            # S(alacsony lr) <= 0.25 * S(alap), seedenként
+  baseline_min_events: 2         # S(alap) < 2 -> az adott seed nem dönthető
+  min_decidable_seeds: 2
+H028b:                           # wd = 0 mellett nincs általánosítás 40k lépésen belül
+  cells: [lr3e-4_wd0, lr1e-3_wd0]
+  acc_threshold: 0.99
+H028c:                           # seed3 alacsony lr-rel: M1 (init) vagy M2 (dinamika)?
+  cell: lr3e-4_wd1
+  seed: 3
+  baseline_freqs: [28, 43]
+  m1_min_jaccard: 0.5

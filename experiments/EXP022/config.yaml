@@ -1,0 +1,20 @@
+experiment: EXP022
+hypothesis: H025
+source:
+  experiment: EXP017          # 2 rétegű modellek; a seed3 HIBÁIT még soha nem néztük meg
+  runs: [seed3, seed4, seed5]
+  focus_run: seed3
+  checkpoint: step040000.pt
+major_frequency_min_share: 0.10
+expected_focus_freqs: [28, 43]  # EXP018/EXP020-ban mért halmaz; eltérés -> INVALID
+baseline_min_acc: 0.99          # érvényesség: a fókusz-modell test acc-ja (betanítatlan modell kizárva)
+evaluation:
+  inputs: all_pairs
+  error_split: test
+  device: cpu
+H025:
+  alias_offsets: [8, 105]           # d = ±8 (mod 113): 28*8 ≡ -2, 43*8 ≡ 5
+  min_share: 0.50                   # véletlen szint: 2/112 ≈ 0.018
+  secondary_offsets: [8, 105, 16, 97]
+  secondary_min_share: 0.70         # véletlen szint: 4/112 ≈ 0.036
+  min_wrong: 10                     # ennél kevesebb hiba -> UNDECIDABLE
