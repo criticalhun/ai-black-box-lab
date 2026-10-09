@@ -1,7 +1,7 @@
 # EXP019 — Mit készít elő a 0. réteg? (EXPLORATÍV)
 
 **Hipotézis:** nincs (hipotézis-generálás)
-**Státusz:** nem futott
+**Státusz:** COMPLETED (2026-10-09) — exploratív
 
 Felfedező modellek: EXP013 seed 0–2. Mérések: attention rétegenként (honnan hova figyel),
 az egyes komponensek kimenetének 2D Fourier-összetétele, és az MLP0 egyváltozós energiájának

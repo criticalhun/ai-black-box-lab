@@ -488,3 +488,34 @@ MLP-je az 1 rétegű modell szorzat-mechanizmusát futtatja, és közvetlenül e
 ### Bizonytalanság
 Szűk tartalékok: seed3 alapvonal 0.9952; seed5 "L0 egyváltozós ki" 0.599 (küszöb 0.75).
 Hogy a 0. réteg MIT készít elő, nem tudjuk.
+
+## 2026-10-09 — EXP019 (EXPLORATÍV) — mit készít elő a 0. réteg?
+
+### Módszer
+Felfedező modellek: EXP013 seed 0–2. Eszközök + kalibráció (tests/test_between_layers.py): commit f413b5f.
+Az init-oszlopok a sandboxban előre számolt értékekkel egyeztek.
+
+### Megfigyelések
+| | seed0 | seed1 | seed2 |
+|---|---|---|---|
+| L0 attention "="-ről | 2 fej b≈0.90, 2 egyenletes | 3 fej b≈0.85, 1 "=" 0.48 | 2 fej b≈0.85, 2 "=" 0.72/0.89 |
+| L0 után "=": a_only / b_only | 0.009 / 0.991 | 0.026 / 0.973 | 0.024 / 0.976 |
+| MLP0 ki: nagy frekv. / felhang (bemenet) | 0.996 / 0.002 (0.996) | 0.995 / 0.003 (0.994) | 0.994 / 0.004 (0.994) |
+| L1 attention "="-ről | a≈0.52, b≈0.00, =≈0.47 (mind) | vegyes | vegyes |
+| attn1 ki "=": a_only | 0.631 | 0.628 | 0.664 |
+| MLP1 ki "=": same_freq (init) | 0.964 (0.002) | 0.896 (0.001) | 0.956 (0.001) |
+
+### Értelmezés ("futár-modell", NEM bizonyított)
+A 0. réteg attentionje b-t hozza a "=" pozícióra, az MLP0 ott átalakítja (ugyanazokon a
+frekvenciákon, felharmonikusok nélkül); az 1. réteg attentionje hozza a-t; az MLP1 szorzat-tagokat
+képez. Ez megmagyarázza, miért nincs szorzat-tag a 0. réteg MLP-jében a "=" pozíción: csak b van jelen.
+A felharmonikus-hipotézis (MLP0 új frekvenciákat gyárt) nem áll meg (exploratív).
+
+### Bizonytalanság
+- Mivé alakítja az MLP0 b-t (amplitúdó/fázis?) — nem mértük.
+- Miért b és nem a — 3 seedből nem dönthető el (H019 külön jóslat).
+- seed0-ban 2 egyenletes L0-fej, mégis b-dominált kimenet — oka nem ismert.
+
+### Megerősítés terve
+H018–H022 az EXP017 (seed 3–5) modelleken: ezeken a fenti mennyiségeket még NEM vizsgáltuk
+(ott csak H014–H017 mérései futottak), így ezekre a kérdésekre függetlenek a felfedező adattól.
