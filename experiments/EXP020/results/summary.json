@@ -1,0 +1,234 @@
+{
+  "experiment": "EXP020",
+  "git_commit": "f338165c9c411d204ef174068689fb2e5be4dd7d",
+  "verdicts": {
+    "H018": "SUPPORTED",
+    "H019": "SUPPORTED",
+    "H020": "PARTIAL",
+    "H021": "SUPPORTED",
+    "H022": "SUPPORTED"
+  },
+  "runs": {
+    "seed3": {
+      "baseline_acc": 0.9951896185255621,
+      "valid": true,
+      "major_freqs": [
+        28,
+        43
+      ],
+      "major_share": [
+        0.32533477286977647,
+        0.42858272530168373
+      ],
+      "H018": {
+        "pass": true,
+        "dominant": "b_only",
+        "dominant_share": 0.9746557962838315,
+        "resid_post0": {
+          "const_share": 0.8196407825320152,
+          "a_only_share": 0.025169082621723748,
+          "b_only_share": 0.9746557962838315,
+          "same_freq_share": 3.37001405652312e-05,
+          "cross_share": 0.00014142095388036937,
+          "major_share": 0.6861626008542425
+        }
+      },
+      "H019": {
+        "pass": true,
+        "dominant": "b_only"
+      },
+      "H020": {
+        "pass": false,
+        "spectrum": {
+          "major": 0.6776797558294176,
+          "harmonics": 0.01416520991202023,
+          "other": 0.3081550342585621,
+          "n_harmonics": 4
+        }
+      },
+      "H021": {
+        "pass": true,
+        "other": "a_only",
+        "other_share": 0.5956657335914519,
+        "attn1_out": {
+          "const_share": 0.2882375823858815,
+          "a_only_share": 0.5956657335914519,
+          "b_only_share": 0.3186436363581201,
+          "same_freq_share": 0.08189204313073137,
+          "cross_share": 0.0037985869196965473,
+          "major_share": 0.6073819558826978
+        }
+      },
+      "H022": {
+        "pass": true,
+        "control_ok": true,
+        "same_freq": 0.8706309816181581,
+        "same_freq_init": 0.0015837337389900973
+      }
+    },
+    "seed4": {
+      "baseline_acc": 1.0,
+      "valid": true,
+      "major_freqs": [
+        8,
+        27,
+        41
+      ],
+      "major_share": [
+        0.27639892286183204,
+        0.32520032905921264,
+        0.32414364355631625
+      ],
+      "H018": {
+        "pass": true,
+        "dominant": "b_only",
+        "dominant_share": 0.9589401204524098,
+        "resid_post0": {
+          "const_share": 0.6539861617230962,
+          "a_only_share": 0.04083244625137869,
+          "b_only_share": 0.9589401204524098,
+          "same_freq_share": 8.119775412708986e-05,
+          "cross_share": 0.00014623554208474803,
+          "major_share": 0.9944460857146727
+        }
+      },
+      "H019": {
+        "pass": true,
+        "dominant": "b_only"
+      },
+      "H020": {
+        "pass": true,
+        "spectrum": {
+          "major": 0.9946593861387126,
+          "harmonics": 0.003194822391117015,
+          "other": 0.002145791470170354,
+          "n_harmonics": 6
+        }
+      },
+      "H021": {
+        "pass": true,
+        "other": "a_only",
+        "other_share": 0.6876104606392354,
+        "attn1_out": {
+          "const_share": 0.04130234908899297,
+          "a_only_share": 0.6876104606392354,
+          "b_only_share": 0.2226862996507909,
+          "same_freq_share": 0.08631405635464236,
+          "cross_share": 0.0033891833553315294,
+          "major_share": 0.9611179711216769
+        }
+      },
+      "H022": {
+        "pass": true,
+        "control_ok": true,
+        "same_freq": 0.9629162933967064,
+        "same_freq_init": 0.0014944865011434572
+      }
+    },
+    "seed5": {
+      "baseline_acc": 1.0,
+      "valid": true,
+      "major_freqs": [
+        1,
+        21,
+        24,
+        36
+      ],
+      "major_share": [
+        0.1855388204436663,
+        0.21709572353542422,
+        0.21013961992139313,
+        0.25168781663653245
+      ],
+      "H018": {
+        "pass": true,
+        "dominant": "b_only",
+        "dominant_share": 0.9854332634625722,
+        "resid_post0": {
+          "const_share": 0.8146845468377711,
+          "a_only_share": 0.01441322385391728,
+          "b_only_share": 0.9854332634625722,
+          "same_freq_share": 7.262413060929492e-06,
+          "cross_share": 0.00014625027045079826,
+          "major_share": 0.9829582665888518
+        }
+      },
+      "H019": {
+        "pass": true,
+        "dominant": "b_only"
+      },
+      "H020": {
+        "pass": true,
+        "spectrum": {
+          "major": 0.9857807720888435,
+          "harmonics": 0.006764846447065911,
+          "other": 0.007454381464090574,
+          "n_harmonics": 7
+        }
+      },
+      "H021": {
+        "pass": true,
+        "other": "a_only",
+        "other_share": 0.6327386828759752,
+        "attn1_out": {
+          "const_share": 0.0657342220523137,
+          "a_only_share": 0.6327386828759752,
+          "b_only_share": 0.27712298988968787,
+          "same_freq_share": 0.08547652117861494,
+          "cross_share": 0.00466180605572203,
+          "major_share": 0.9601159079976865
+        }
+      },
+      "H022": {
+        "pass": true,
+        "control_ok": true,
+        "same_freq": 0.9124229882658998,
+        "same_freq_init": 0.0013611244990966317
+      }
+    }
+  },
+  "config": {
+    "experiment": "EXP020",
+    "hypotheses": [
+      "H018",
+      "H019",
+      "H020",
+      "H021",
+      "H022"
+    ],
+    "source": {
+      "experiment": "EXP017",
+      "runs": [
+        "seed3",
+        "seed4",
+        "seed5"
+      ],
+      "checkpoint": "step040000.pt",
+      "control_checkpoint": "step000000.pt"
+    },
+    "major_frequency_min_share": 0.1,
+    "evaluation": {
+      "inputs": "all_pairs",
+      "acc_split": "test",
+      "device": "cpu"
+    },
+    "baseline_min_acc": 0.99,
+    "H018": {
+      "min_dominant_share": 0.9
+    },
+    "H019": {
+      "dominant": "b_only"
+    },
+    "H020": {
+      "min_major_share": 0.95,
+      "max_harmonics_share": 0.02
+    },
+    "H021": {
+      "min_other_share": 0.5
+    },
+    "H022": {
+      "min_same_freq": 0.8,
+      "control_max_same_freq": 0.05
+    }
+  }
+}

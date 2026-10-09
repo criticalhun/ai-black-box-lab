@@ -2,3 +2,5 @@
 A hipotézisek, küszöbök ÉS az elemző kód a mérés ELŐTT commitolva. Ezeken a modelleken
 az itt mért mennyiségeket korábban nem vizsgáltuk.
     uv run python experiments/EXP020/confirm.py --config experiments/EXP020/config.yaml
+
+**Státusz:** COMPLETED (2026-10-09) — lásd JOURNAL

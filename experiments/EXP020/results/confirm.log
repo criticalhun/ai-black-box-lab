@@ -1,0 +1,31 @@
+=== EXP020: what flows between the layers — confirmatory (EXP017 seeds 3–5) ===
+
+##### seed3  baseline acc 0.9952  major freqs: 28 (0.33), 43 (0.43)
+H018 PASS | after L0 @'=': dominant b_only 0.975 (a_only 0.025, b_only 0.975)
+H019 PASS | dominant number = b_only
+H020 FAIL | MLP0 out univariate energy: major 0.678, harmonics 0.014, other 0.308
+H021 PASS | attn1 out @'=': other number (a_only) share 0.596
+H022 PASS | MLP1 out @'=' same_freq 0.871 (init 0.002)
+
+##### seed4  baseline acc 1.0000  major freqs: 8 (0.28), 27 (0.33), 41 (0.32)
+H018 PASS | after L0 @'=': dominant b_only 0.959 (a_only 0.041, b_only 0.959)
+H019 PASS | dominant number = b_only
+H020 PASS | MLP0 out univariate energy: major 0.995, harmonics 0.003, other 0.002
+H021 PASS | attn1 out @'=': other number (a_only) share 0.688
+H022 PASS | MLP1 out @'=' same_freq 0.963 (init 0.001)
+
+##### seed5  baseline acc 1.0000  major freqs: 1 (0.19), 21 (0.22), 24 (0.21), 36 (0.25)
+H018 PASS | after L0 @'=': dominant b_only 0.985 (a_only 0.014, b_only 0.985)
+H019 PASS | dominant number = b_only
+H020 PASS | MLP0 out univariate energy: major 0.986, harmonics 0.007, other 0.007
+H021 PASS | attn1 out @'=': other number (a_only) share 0.633
+H022 PASS | MLP1 out @'=' same_freq 0.912 (init 0.001)
+
+=== VERDICTS ===
+H018: SUPPORTED
+H019: SUPPORTED
+H020: PARTIAL
+H021: SUPPORTED
+H022: SUPPORTED
+
+saved -> experiments/EXP020/results

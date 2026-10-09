@@ -519,3 +519,27 @@ A felharmonikus-hipotézis (MLP0 új frekvenciákat gyárt) nem áll meg (explor
 ### Megerősítés terve
 H018–H022 az EXP017 (seed 3–5) modelleken: ezeken a fenti mennyiségeket még NEM vizsgáltuk
 (ott csak H014–H017 mérései futottak), így ezekre a kérdésekre függetlenek a felfedező adattól.
+
+## 2026-10-09 — EXP020: a "futár-modell" megerősítése (EXP017 seed 3–5)
+
+### Módszer
+H018–H022 + EXP020 kód: commit f338165, a mérés ELŐTT. Ezeken a modelleken az itt mért
+mennyiségeket korábban nem vizsgáltuk (csak H014–H017 futott rajtuk).
+
+### Eredmények
+| | seed3 | seed4 | seed5 | ítélet |
+|---|---|---|---|---|
+| H018 domináns arány L0 után | 0.975 | 0.959 | 0.985 | SUPPORTED |
+| H019 domináns szám | b | b | b | SUPPORTED |
+| H020 MLP0: nagy / felharm. / egyéb | 0.678 / 0.014 / 0.308 | 0.995 / 0.003 / 0.002 | 0.986 / 0.007 / 0.007 | PARTIAL |
+| H021 attn1: másik szám (a) | 0.596 | 0.688 | 0.633 | SUPPORTED |
+| H022 MLP1 ki same_freq (init) | 0.871 (0.002) | 0.963 (0.001) | 0.912 (0.001) | SUPPORTED |
+
+### Értelmezés
+A 2 rétegű modell "futár-mechanizmusa" megerősítve: a 0. réteg b-t hozza a "=" pozícióra
+(6/6 modellben b), az 1. réteg attentionje a-t; az MLP1 kimenete szorzat-dominált.
+
+### Megfigyelés (nem tesztelt)
+seed3 háromszor lóg ki: 2 nagy frekvencia (a többinél 3–4), 0.995-ön megakadt generalizáció,
+és MLP0 kimenetének 31%-a "egyéb" frekvenciákon. Lehetséges közös ok: félbemaradt
+áramkör-kialakulás. Egyetlen modell — nem általánosítható.

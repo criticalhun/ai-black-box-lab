@@ -77,3 +77,18 @@ instabil, a koncentráció ingadozik. Nyitott: melyik réteg végzi a számítá
 az 1. réteg az 1 rétegű modellből ismert szorzat-mechanizmust futtatja. A mechanizmus
 "magja" megmaradt, de egy előkészítő lépés került elé.
 Nyitott: mit készít elő a 0. réteg; az erős tanítási instabilitás oka.
+
+## 2. fázis — a "futár-mechanizmus" (EXP019 felfedezés, EXP020 megerősítés)
+
+| # | Állítás | Eredmény |
+|---|---|---|
+| H018 | A 0. réteg után a "=" pozíción egyetlen szám dominál (≥ 0.90) | SUPPORTED, 3/3 |
+| H019 | Ez a szám a b (6/6 két rétegű modellben) | SUPPORTED, 3/3 |
+| H020 | Az MLP0 nem gyárt új frekvenciákat | PARTIAL, 2/3 |
+| H021 | Az 1. réteg attentionje a másik számot (a) hozza a "=" pozícióra | SUPPORTED, 3/3 |
+| H022 | Az MLP1 kimenete a "=" pozíción szorzat-dominált (≥ 0.80) | SUPPORTED, 3/3 |
+
+**A 2 rétegű modell számítása:** (1) a 0. réteg b-t a "=" pozícióra hozza és átalakítja;
+(2) az 1. réteg a-t hozza; (3) az MLP1 ReLU-val szorzat-tagokat képez; (4) ezek adják a választ.
+Az 1 rétegű modellben (1) és (2) egyetlen attention-lépés volt.
+Nyitott: miért b; mivé alakítja az MLP0 b-t; az instabil tanítás; a seed3-anomália.
