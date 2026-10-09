@@ -163,3 +163,50 @@ def residual_dla(model: torch.nn.Module, tokens: torch.Tensor, p: int) -> dict:
     out = {k: dla_metrics(v, p) for k, v in comps.items()}
     out["total"] = dla_metrics(logits[:, -1, :p].to(torch.float64).reshape(p, p, p), p)
     return out
+
+
+# ---------- what flows between layers ----------
+
+def attention_at(cache: dict, layer: int, pos: int = 2) -> list[dict]:
+    """Mean attention from query position `pos` to every key position, per head, for a layer."""
+    pat = cache[f"blocks.{layer}.attn.hook_pattern"][:, :, pos, :pos + 1]   # [N, head, k]
+    return [{"head": h, "to": [pat[:, h, k].mean().item() for k in range(pat.shape[2])],
+             "std": [pat[:, h, k].std().item() for k in range(pat.shape[2])]} for h in range(pat.shape[1])]
+
+
+def harmonic_frequencies(major: list[int], p: int, orders: tuple[int, ...] = (2, 3)) -> list[int]:
+    """Frequencies m*k (folded into 1..(p-1)/2) for k in `major`, m in `orders`, excluding `major` itself."""
+    out = set()
+    for k in major:
+        for m in orders:
+            r = (m * k) % p
+            f = min(r, p - r)
+            if f != 0 and f not in major:
+                out.add(f)
+    return sorted(out)
+
+
+def class_composition(X: torch.Tensor, major: list[int]) -> dict:
+    """X: [p, p, d] (a vector per (a, b)). Shares of its NON-constant energy per 2D Fourier class,
+    the constant share of the total, and the share of non-constant energy at major frequencies
+    (E(k,0) + E(0,k) + E(k,k) summed over k in major)."""
+    E2 = fourier2d_energy(X).sum(dim=tuple(range(2, X.dim())))          # [K, K]
+    c = energy_classes(E2)
+    var = (c["total"] - c["const"]).item()
+    score = per_frequency_score(E2)                                      # [K-1]
+    major_part = sum(score[k - 1].item() for k in major)
+    return {"const_share": (c["const"] / c["total"]).item(),
+            **{f"{k}_share": c[k].item() / var for k in ("a_only", "b_only", "same_freq", "cross")},
+            "major_share": major_part / var}
+
+
+def univariate_spectrum(X: torch.Tensor, major: list[int], p: int) -> dict:
+    """Where the a-only and b-only energy of X [p, p, d] sits: at major frequencies,
+    at their 2nd/3rd harmonics, or elsewhere (shares of the a_only + b_only energy)."""
+    E2 = fourier2d_energy(X).sum(dim=tuple(range(2, X.dim())))
+    uni = E2[1:, 0] + E2[0, 1:]                                          # per k = 1..K-1
+    tot = uni.sum().item()
+    harm = harmonic_frequencies(major, p)
+    at = lambda ks: sum(uni[k - 1].item() for k in ks) / tot
+    return {"major": at(major), "harmonics": at(harm), "other": 1 - at(major) - at(harm),
+            "n_harmonics": len(harm)}

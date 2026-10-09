@@ -1,0 +1,11 @@
+experiment: EXP019
+hypothesis: null          # EXPLORATÍV — mit készít elő a 0. réteg? nincs ítélet
+source:
+  experiment: EXP013      # 2 rétegű felfedező modellek (seed 0–2)
+  runs: [seed0, seed1, seed2]
+  checkpoint: step040000.pt
+  control_checkpoint: step000000.pt
+major_frequency_min_share: 0.10
+evaluation:
+  inputs: all_pairs
+  device: cpu
