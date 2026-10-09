@@ -124,3 +124,42 @@ def mlp_class_coherence(model: torch.nn.Module, tokens: torch.Tensor, p: int) ->
         hX = project_out_classes(h, set(CLASS_NAMES) - keep).reshape(p * p, -1)
         out[g] = coherence(hX, M)
     return out
+
+
+# ---------- layer-aware versions (n_layers >= 1) ----------
+
+def neuron_structure_at(cache: dict, p: int, major: list[int], layer: int, pos: int) -> dict:
+    """Like neuron_structure, for any layer and token position."""
+    acts = cache[f"blocks.{layer}.mlp.hook_post"][:, pos, :].reshape(p, p, -1)
+    alive = acts.amax(dim=(0, 1)) >= 1e-8
+    E2 = fourier2d_energy(acts)
+    cls = energy_classes(E2)
+    var = cls["total"] - cls["const"]
+    alive = alive & (var > 0)
+    tot = var[alive].sum()
+    if not bool(alive.any()):
+        return {"n_alive": 0, "frac_alive_dominant_in_major": float("nan"),
+                "class_shares": {c: float("nan") for c in ("a_only", "b_only", "same_freq", "cross")}}
+    shares = {c: (cls[c][alive].sum() / tot).item() for c in ("a_only", "b_only", "same_freq", "cross")}
+    dom_k = per_frequency_score(E2).argmax(dim=0) + 1
+    n_alive = int(alive.sum())
+    in_major = sum(int(k) in set(major) for k in dom_k[alive].tolist())
+    return {"n_alive": n_alive, "frac_alive_dominant_in_major": in_major / n_alive,
+            "class_shares": shares}
+
+
+def residual_dla(model: torch.nn.Module, tokens: torch.Tensor, p: int) -> dict:
+    """Direct logit attribution at '=' for a model of any depth: embed+pos, and each
+    layer's attn_out / mlp_out. Returns {component: dla_metrics} + 'total'.
+    Note: DIRECT path only — what a layer contributes via later layers is not counted."""
+    with torch.no_grad():
+        logits, cache = model.run_with_cache(tokens)
+    WU = model.W_U[:, :p].detach().to(torch.float64)
+    grid = lambda x: x[:, 2].to(torch.float64).reshape(p, p, -1)
+    comps = {"embed+pos": (grid(cache["hook_embed"]) + grid(cache["hook_pos_embed"])) @ WU}
+    for L in range(len(model.blocks)):
+        comps[f"attn{L}"] = grid(cache[f"blocks.{L}.hook_attn_out"]) @ WU
+        comps[f"mlp{L}"] = grid(cache[f"blocks.{L}.hook_mlp_out"]) @ WU
+    out = {k: dla_metrics(v, p) for k, v in comps.items()}
+    out["total"] = dla_metrics(logits[:, -1, :p].to(torch.float64).reshape(p, p, p), p)
+    return out

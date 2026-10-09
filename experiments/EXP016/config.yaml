@@ -1,0 +1,16 @@
+experiment: EXP016
+hypothesis: null          # EXPLORATÍV — melyik réteg végzi a számítást? nincs ítélet
+source:
+  experiment: EXP013      # 2 rétegű felfedező modellek (seed 0–2); megerősítés később friss seedeken
+  runs: [seed0, seed1, seed2]
+  checkpoint: step040000.pt
+  control_checkpoint: step000000.pt
+major_frequency_min_share: 0.10
+mlp_sites:                # (réteg, pozíció): pos 1 = b helye (már látja a-t is), pos 2 = "="
+  - [0, 1]
+  - [0, 2]
+  - [1, 2]
+evaluation:
+  inputs: all_pairs
+  acc_split: test
+  device: cpu

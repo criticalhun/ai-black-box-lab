@@ -35,3 +35,12 @@ def mlp_class_ablation_hook(p: int, remove: set[str], pos: int = 2):
         out[:, pos, :] = A2.reshape(p * p, -1)
         return out
     return hook
+
+
+def mean_ablation_hook():
+    """Forward hook: replace an activation by its mean over the batch (separately for
+    each position). The component keeps its average effect but carries no
+    input-specific information. Use with the full (a, b) grid as the batch."""
+    def hook(act: torch.Tensor, name: str) -> torch.Tensor:
+        return act.mean(dim=0, keepdim=True).expand_as(act).clone()
+    return hook
