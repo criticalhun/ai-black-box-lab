@@ -382,3 +382,17 @@ seed6: a 38000. lépésnél loss-kiugrás (train 4.6e-4, test 8.1e-4), acc végi
 ### Értelmezés
 A kiolvasási lépés (kioltás/erősítés) friss modelleken is megismétlődött, nagy tartalékkal.
 A teljes mechanizmus összefoglalója: FINDINGS.md.
+
+## 2026-10-09 — 2. fázis indul: kétrétegű modell (EXP013–EXP015)
+
+### Cél
+Átvihetők-e az 1 rétegű modell eredményei (H001–H003) mélyebb modellre?
+Egyetlen változó: n_layers 1 → 2. Feladat, adat, felosztás, tanítási beállítás azonos.
+
+### Hipotézisek
+H011 (generalizáció), H012 (Fourier-koncentráció), H013 (kauzális szerep) — a H001–H003
+kritériumaival, a 2 rétegű modellek tanítása ELŐTT rögzítve. A kód változatlan
+(train.py, EXP002/analyze.py, EXP003/run.py), csak új configok (diff ellenőrizve).
+
+### Várt paraméterszám
+226 816 + egy további blokk (attention 65 536 + MLP 131 712) = 424 064.

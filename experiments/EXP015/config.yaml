@@ -1,0 +1,33 @@
+experiment: EXP015
+hypothesis: H013
+
+source:
+  experiment: EXP013
+  runs: [seed0, seed1, seed2]
+  checkpoint: step040000.pt
+key_frequencies_from: EXP014   # results/summary.json -> runs.<run>.final.top_k_freqs
+
+intervention:
+  matrix: W_E
+  rows: [0, 113]
+  basis: real_fourier_orthonormal
+  keep_constant_in_sufficiency: true
+
+evaluation:
+  split: test
+  device: cpu
+
+criteria:
+  baseline_min_acc: 0.99
+  necessity_max_acc: 0.05
+  sufficiency_min_acc: 0.99
+  control_min_acc: 0.99
+
+control:
+  n_draws: 10
+  n_freqs: 8
+  rng_seed: 0
+
+exploratory:
+  dose_response: true
+  single_frequency_ablation: true
