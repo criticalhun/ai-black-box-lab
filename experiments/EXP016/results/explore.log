@@ -1,0 +1,61 @@
+=== EXP016 — EXPLORATORY: where does the 2-layer model compute? (no verdict) ===
+pos 1 = b's position (already sees a), pos 2 = '=' (where the answer is read)
+
+##### seed0   major freqs: 2 (0.31), 11 (0.34), 19 (0.34)
+  MLP neuron structure         alive  dom.in major  same_freq  (init same_freq)
+    L0p1                        512        1.000      0.095  (0.001)
+    L0p2                        512        1.000      0.000  (0.001)
+    L1p2                        512        1.000      0.210  (0.001)
+  direct logit attribution (margin share of +77.25): embed+pos  -0.0%, attn0   0.0%, mlp0   0.0%, attn1  11.7%, mlp1  88.3%
+  interventions (test acc, loss):
+    baseline                     acc 1.0000  loss 4.41e-07
+    mean-ablate attn0            acc 0.0096  loss 5.51e+01
+    mean-ablate mlp0             acc 0.0204  loss 4.90e+01
+    mean-ablate attn1            acc 0.0117  loss 2.48e+01
+    mean-ablate mlp1             acc 0.1491  loss 6.92e+00
+    L0p1 remove same_freq        acc 1.0000  loss 4.39e-07
+    L0p1 remove univariate       acc 1.0000  loss 4.50e-07
+    L0p2 remove same_freq        acc 1.0000  loss 4.40e-07
+    L0p2 remove univariate       acc 0.0527  loss 1.04e+01
+    L1p2 remove same_freq        acc 0.1080  loss 6.53e+00
+    L1p2 remove univariate       acc 1.0000  loss 5.49e-06
+
+##### seed1   major freqs: 29 (0.21), 38 (0.26), 44 (0.19), 54 (0.25)
+  MLP neuron structure         alive  dom.in major  same_freq  (init same_freq)
+    L0p1                        508        1.000      0.002  (0.001)
+    L0p2                        508        1.000      0.000  (0.001)
+    L1p2                        512        1.000      0.202  (0.001)
+  direct logit attribution (margin share of +55.96): embed+pos  -0.0%, attn0   0.0%, mlp0   0.0%, attn1   8.4%, mlp1  91.6%
+  interventions (test acc, loss):
+    baseline                     acc 1.0000  loss 5.67e-06
+    mean-ablate attn0            acc 0.0150  loss 3.27e+01
+    mean-ablate mlp0             acc 0.0162  loss 3.67e+01
+    mean-ablate attn1            acc 0.0117  loss 1.82e+01
+    mean-ablate mlp1             acc 0.0461  loss 1.04e+01
+    L0p1 remove same_freq        acc 1.0000  loss 7.12e-06
+    L0p1 remove univariate       acc 0.5526  loss 3.00e+00
+    L0p2 remove same_freq        acc 1.0000  loss 6.07e-06
+    L0p2 remove univariate       acc 0.2254  loss 9.90e+00
+    L1p2 remove same_freq        acc 0.0378  loss 1.06e+01
+    L1p2 remove univariate       acc 0.9998  loss 9.79e-04
+
+##### seed2   major freqs: 9 (0.24), 27 (0.41), 55 (0.30)
+  MLP neuron structure         alive  dom.in major  same_freq  (init same_freq)
+    L0p1                        510        1.000      0.012  (0.001)
+    L0p2                        510        1.000      0.000  (0.001)
+    L1p2                        504        1.000      0.197  (0.001)
+  direct logit attribution (margin share of +65.69): embed+pos  -0.0%, attn0   0.0%, mlp0   0.0%, attn1   2.7%, mlp1  97.3%
+  interventions (test acc, loss):
+    baseline                     acc 1.0000  loss 3.13e-05
+    mean-ablate attn0            acc 0.0091  loss 3.95e+01
+    mean-ablate mlp0             acc 0.0091  loss 4.15e+01
+    mean-ablate attn1            acc 0.0093  loss 2.13e+01
+    mean-ablate mlp1             acc 0.0153  loss 9.44e+00
+    L0p1 remove same_freq        acc 1.0000  loss 3.52e-05
+    L0p1 remove univariate       acc 0.7859  loss 6.59e-01
+    L0p2 remove same_freq        acc 1.0000  loss 3.10e-05
+    L0p2 remove univariate       acc 0.5102  loss 2.53e+00
+    L1p2 remove same_freq        acc 0.0143  loss 1.04e+01
+    L1p2 remove univariate       acc 1.0000  loss 9.62e-05
+
+saved -> experiments/EXP016/results

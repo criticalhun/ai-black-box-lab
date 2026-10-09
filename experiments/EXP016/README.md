@@ -1,7 +1,7 @@
 # EXP016 — Hol számol a 2 rétegű modell? (EXPLORATÍV)
 
 **Hipotézis:** nincs (hipotézis-generálás)
-**Státusz:** nem futott
+**Státusz:** COMPLETED (2026-10-09) — exploratív
 
 Felfedező modellek: EXP013 seed 0–2. Három MLP-hely: (réteg 0, b pozíció), (réteg 0, "="),
 (réteg 1, "="). Mérések: neuron-szerkezet (2D Fourier), közvetlen logit-attribúció rétegenként,

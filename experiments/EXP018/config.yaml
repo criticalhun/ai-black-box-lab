@@ -1,0 +1,27 @@
+experiment: EXP018
+hypotheses: [H014, H015, H016, H017]
+source:
+  experiment: EXP017      # FRISS 2 rétegű modellek (seed 3, 4, 5)
+  runs: [seed3, seed4, seed5]
+  checkpoint: step040000.pt
+  control_checkpoint: step000000.pt
+major_frequency_min_share: 0.10
+evaluation:
+  inputs: all_pairs
+  acc_split: test
+  device: cpu
+baseline_min_acc: 0.99       # minden hipotézis érvényességi feltétele
+H014:                        # munkamegosztás a neuronok szerkezetében
+  L1p2_min_same_freq: 0.10
+  L0p2_max_same_freq: 0.02
+  control_L1p2_max_same_freq: 0.05
+H015:                        # közvetlen logit-attribúció
+  min_total_margin: 1.0
+  mlp1_min_margin_share: 0.80
+  layer0_max_margin_share: 0.05   # attn0 + mlp0 együtt
+H016:                        # kauzális munkamegosztás
+  L1p2_remove_same_freq_max_acc: 0.20
+  L1p2_remove_univariate_min_acc: 0.99
+  L0p2_remove_univariate_max_acc: 0.75
+H017:                        # nincs "üres emelet"
+  mean_ablate_each_max_acc: 0.20

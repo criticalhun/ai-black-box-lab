@@ -426,3 +426,34 @@ seed1 38, 54, 29, 44; seed2 27, 55, 9. A többi ≤ 0.006 — közepes frekvenci
 ### Következő lépés
 Melyik réteg MLP-je végzi a szorzást? Exploratív vizsgálat ezeken a modelleken
 (seed 0–2 = felfedező halmaz a 2 rétegű kérdésekhez), megerősítés friss 2 rétegű seedeken.
+
+## 2026-10-09 — EXP016 (EXPLORATÍV) — hol számol a 2 rétegű modell?
+
+### Módszer
+Felfedező modellek: EXP013 seed 0–2. Rétegtudatos eszközök + kalibráció (tests/test_layers.py),
+commit a033166. Az init-modell alapvonala a sandboxban előre számolt értékkel egyezett.
+
+### Megfigyelések
+| | seed0 | seed1 | seed2 |
+|---|---|---|---|
+| same_freq L0"=" / L1"=" (init) | 0.000 / 0.210 (0.001) | 0.000 / 0.202 (0.001) | 0.000 / 0.197 (0.001) |
+| same_freq L0, b pozíció | 0.095 | 0.002 | 0.012 |
+| DLA margin mlp1 / attn1 / 0. réteg | 88.3 / 11.7 / 0% | 91.6 / 8.4 / 0% | 97.3 / 2.7 / 0% |
+| L1"=" same_freq ki → acc | 0.108 | 0.038 | 0.014 |
+| L1"=" egyváltozós ki → acc | 1.000 | 0.9998 | 1.000 |
+| L0"=" egyváltozós ki → acc | 0.053 | 0.225 | 0.510 |
+| átlag-abláció max acc (4 komponens) | 0.149 | 0.046 | 0.015 |
+
+### Értelmezés
+- Munkamegosztás: a 0. réteg MLP-je a "=" pozíción szorzat-tagok nélkül, egyváltozós
+  feldolgozást végez, ami kauzálisan kell; az 1. réteg MLP-je az 1 rétegű modellhez hasonló
+  szorzat-mechanizmust futtat, és közvetlenül ez adja a margin ~90%-át.
+- Nincs "üres" komponens: mind a négy átlag-ablációja összetöri a modellt.
+
+### Bizonytalanság
+- Az L0 egyváltozós kivételének hatása seedenként nagyon eltér (0.05–0.51).
+- A b pozíció (L0p1) szerepe nem egyértelmű (seed0: same_freq 0.095, de kivétele hatástalan).
+- DLA = csak közvetlen út; a 0. réteg hatása közvetett (az abláció mutatja).
+
+### Következő lépés
+H014–H017 rögzítése, megerősítés friss 2 rétegű seedeken (3, 4, 5).
