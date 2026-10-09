@@ -63,3 +63,17 @@ Egyetlen változó: n_layers 1 → 2 (424 064 paraméter).
 
 Az embedding-szintű mechanizmus átvihető. Eltérés (exploratív): a tanítás erősen
 instabil, a koncentráció ingadozik. Nyitott: melyik réteg végzi a számítást.
+
+## 2. fázis — munkamegosztás (EXP016 felfedezés, EXP018 megerősítés friss seedeken)
+
+| # | Állítás | Eredmény |
+|---|---|---|
+| H014 | 1. réteg MLP-je szorzat-tagokat képez (≥ 0.10), a 0. rétegé a "=" pozíción nem (≤ 0.02) | SUPPORTED, 3/3 |
+| H015 | A helyes válasz közvetlen logit-előnyének > 80%-a az 1. réteg MLP-jéből jön; a 0. rétegből ≈ 0 | SUPPORTED, 3/3 |
+| H016 | 1. réteg: szorzat-tagok kellenek, egyváltozós tagok nem; 0. réteg: egyváltozós tagok kellenek | SUPPORTED, 3/3 |
+| H017 | Mind a négy komponens (attn0, mlp0, attn1, mlp1) nélkülözhetetlen | SUPPORTED, 3/3 |
+
+**Mechanizmus a 2 rétegű modellben:** a 0. réteg előkészít (számonként, szorzás nélkül),
+az 1. réteg az 1 rétegű modellből ismert szorzat-mechanizmust futtatja. A mechanizmus
+"magja" megmaradt, de egy előkészítő lépés került elé.
+Nyitott: mit készít elő a 0. réteg; az erős tanítási instabilitás oka.

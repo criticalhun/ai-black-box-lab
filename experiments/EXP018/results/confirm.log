@@ -1,0 +1,27 @@
+=== EXP018: confirmatory tests on FRESH 2-layer models (seeds 3–5) ===
+
+##### seed3  baseline acc 0.9952  major freqs: 28 (0.33), 43 (0.43)
+H014 PASS | same_freq L1p2 0.163 (init 0.002), L0p2 0.000
+H015 PASS | total margin +94.79 | mlp1 share 0.957 | layer0 share -0.000
+H016 PASS | L1p2 remove same_freq acc 0.0124 | L1p2 remove univariate acc 0.9956 | L0p2 remove univariate acc 0.1566
+H017 PASS | mean-ablation acc: attn0 0.0135, mlp0 0.0121, attn1 0.0093, mlp1 0.0330
+
+##### seed4  baseline acc 1.0000  major freqs: 8 (0.28), 27 (0.33), 41 (0.32)
+H014 PASS | same_freq L1p2 0.211 (init 0.001), L0p2 0.000
+H015 PASS | total margin +79.01 | mlp1 share 0.964 | layer0 share -0.000
+H016 PASS | L1p2 remove same_freq acc 0.0308 | L1p2 remove univariate acc 1.0000 | L0p2 remove univariate acc 0.2443
+H017 PASS | mean-ablation acc: attn0 0.0082, mlp0 0.0097, attn1 0.0164, mlp1 0.0567
+
+##### seed5  baseline acc 1.0000  major freqs: 1 (0.19), 21 (0.22), 24 (0.21), 36 (0.25)
+H014 PASS | same_freq L1p2 0.208 (init 0.001), L0p2 0.000
+H015 PASS | total margin +33.44 | mlp1 share 0.929 | layer0 share -0.000
+H016 PASS | L1p2 remove same_freq acc 0.0436 | L1p2 remove univariate acc 1.0000 | L0p2 remove univariate acc 0.5992
+H017 PASS | mean-ablation acc: attn0 0.0155, mlp0 0.0265, attn1 0.0139, mlp1 0.0487
+
+=== VERDICTS ===
+H014: SUPPORTED
+H015: SUPPORTED
+H016: SUPPORTED
+H017: SUPPORTED
+
+saved -> experiments/EXP018/results

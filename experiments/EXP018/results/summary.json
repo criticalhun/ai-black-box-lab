@@ -1,0 +1,182 @@
+{
+  "experiment": "EXP018",
+  "git_commit": "9552ef87a23475e4cd1d5b29f74b74a72d7e245c",
+  "verdicts": {
+    "H014": "SUPPORTED",
+    "H015": "SUPPORTED",
+    "H016": "SUPPORTED",
+    "H017": "SUPPORTED"
+  },
+  "runs": {
+    "seed3": {
+      "baseline_acc": 0.9951896185255621,
+      "valid": true,
+      "major_freqs": [
+        28,
+        43
+      ],
+      "major_share": [
+        0.32533477286977647,
+        0.42858272530168373
+      ],
+      "H014": {
+        "pass": true,
+        "control_ok": true,
+        "L1p2_same_freq": 0.16281818519355087,
+        "L0p2_same_freq": 3.875728256338221e-05,
+        "L1p2_same_freq_init": 0.001550910102415255
+      },
+      "H015": {
+        "pass": true,
+        "total_margin": 94.79419620344765,
+        "mlp1_share": 0.9566050190392763,
+        "layer0_share": -5.440969499788044e-06
+      },
+      "H016": {
+        "pass": true,
+        "L1p2_remove_same_freq": 0.01241749636424656,
+        "L1p2_remove_univariate": 0.9956370958720214,
+        "L0p2_remove_univariate": 0.15661707126076743
+      },
+      "H017": {
+        "pass": true,
+        "mean_ablation_acc": {
+          "attn0": 0.013536189730394898,
+          "mlp0": 0.012081888354402059,
+          "attn1": 0.00928515493903121,
+          "mlp1": 0.03300145430137599
+        }
+      }
+    },
+    "seed4": {
+      "baseline_acc": 1.0,
+      "valid": true,
+      "major_freqs": [
+        8,
+        27,
+        41
+      ],
+      "major_share": [
+        0.27639892286183204,
+        0.32520032905921264,
+        0.32414364355631625
+      ],
+      "H014": {
+        "pass": true,
+        "control_ok": true,
+        "L1p2_same_freq": 0.2113756073790956,
+        "L0p2_same_freq": 9.602453073699998e-05,
+        "L1p2_same_freq_init": 0.0014516049271563693
+      },
+      "H015": {
+        "pass": true,
+        "total_margin": 79.01044129612934,
+        "mlp1_share": 0.9636396019678465,
+        "layer0_share": -9.233464866435308e-06
+      },
+      "H016": {
+        "pass": true,
+        "L1p2_remove_same_freq": 0.030764067569079314,
+        "L1p2_remove_univariate": 1.0,
+        "L0p2_remove_univariate": 0.24432263116679717
+      },
+      "H017": {
+        "pass": true,
+        "mean_ablation_acc": {
+          "attn0": 0.008166461572882873,
+          "mlp0": 0.009732632285490548,
+          "attn1": 0.01644479248238058,
+          "mlp1": 0.056717753663720775
+        }
+      }
+    },
+    "seed5": {
+      "baseline_acc": 1.0,
+      "valid": true,
+      "major_freqs": [
+        1,
+        21,
+        24,
+        36
+      ],
+      "major_share": [
+        0.1855388204436663,
+        0.21709572353542422,
+        0.21013961992139313,
+        0.25168781663653245
+      ],
+      "H014": {
+        "pass": true,
+        "control_ok": true,
+        "L1p2_same_freq": 0.2082810595809194,
+        "L0p2_same_freq": 1.1231989163411543e-05,
+        "L1p2_same_freq_init": 0.0013690046858711585
+      },
+      "H015": {
+        "pass": true,
+        "total_margin": 33.43917152625319,
+        "mlp1_share": 0.9287215157269759,
+        "layer0_share": -1.1790160433127497e-06
+      },
+      "H016": {
+        "pass": true,
+        "L1p2_remove_same_freq": 0.04362904127978521,
+        "L1p2_remove_univariate": 1.0,
+        "L0p2_remove_univariate": 0.5991721669090502
+      },
+      "H017": {
+        "pass": true,
+        "mean_ablation_acc": {
+          "attn0": 0.015549837789461908,
+          "mlp0": 0.026513032777715627,
+          "attn1": 0.013871797740239401,
+          "mlp1": 0.048663161427452736
+        }
+      }
+    }
+  },
+  "config": {
+    "experiment": "EXP018",
+    "hypotheses": [
+      "H014",
+      "H015",
+      "H016",
+      "H017"
+    ],
+    "source": {
+      "experiment": "EXP017",
+      "runs": [
+        "seed3",
+        "seed4",
+        "seed5"
+      ],
+      "checkpoint": "step040000.pt",
+      "control_checkpoint": "step000000.pt"
+    },
+    "major_frequency_min_share": 0.1,
+    "evaluation": {
+      "inputs": "all_pairs",
+      "acc_split": "test",
+      "device": "cpu"
+    },
+    "baseline_min_acc": 0.99,
+    "H014": {
+      "L1p2_min_same_freq": 0.1,
+      "L0p2_max_same_freq": 0.02,
+      "control_L1p2_max_same_freq": 0.05
+    },
+    "H015": {
+      "min_total_margin": 1.0,
+      "mlp1_min_margin_share": 0.8,
+      "layer0_max_margin_share": 0.05
+    },
+    "H016": {
+      "L1p2_remove_same_freq_max_acc": 0.2,
+      "L1p2_remove_univariate_min_acc": 0.99,
+      "L0p2_remove_univariate_max_acc": 0.75
+    },
+    "H017": {
+      "mean_ablate_each_max_acc": 0.2
+    }
+  }
+}

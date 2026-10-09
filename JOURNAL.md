@@ -457,3 +457,34 @@ commit a033166. Az init-modell alapvonala a sandboxban előre számolt értékke
 
 ### Következő lépés
 H014–H017 rögzítése, megerősítés friss 2 rétegű seedeken (3, 4, 5).
+
+## 2026-10-09 — EXP017–EXP018: munkamegosztás megerősítve friss 2 rétegű seedeken
+
+### Módszer
+H014–H017 + EXP018 elemző kód: commit 9552ef8, a seed 3–5 tanítása ELŐTT.
+Érvényességi feltétel: végső test acc ≥ 0.99 (egy betanítatlan modell H017-et triviálisan teljesítené).
+
+### Eredmények
+| | seed3 | seed4 | seed5 | ítélet |
+|---|---|---|---|---|
+| alapvonal acc | 0.9952 | 1.0000 | 1.0000 | érvényes |
+| H014 same_freq L1 / L0 | 0.163 / 0.000 | 0.211 / 0.000 | 0.208 / 0.000 | SUPPORTED |
+| H015 mlp1 / 0. réteg margin | 95.7 / 0.0% | 96.4 / 0.0% | 92.9 / 0.0% | SUPPORTED |
+| H016 L1 sf ki / L1 egyv. ki / L0 egyv. ki | 0.012 / 0.996 / 0.157 | 0.031 / 1.000 / 0.244 | 0.044 / 1.000 / 0.599 | SUPPORTED |
+| H017 átlag-abláció max | 0.033 | 0.057 | 0.049 | SUPPORTED |
+
+Nagy frekvenciák: seed3 28, 43 (csak kettő); seed4 8, 27, 41; seed5 1, 21, 24, 36.
+H011 replikáció: első ≥ 0.99 teszt: 7600 / 5400 / 9700.
+
+### Megfigyelések (nem tesztelt)
+- seed3 a 8000. lépéstől test acc ≈ 0.995-ön ragadt (≈ 43 hibás pár), és csak 2 nagy frekvenciája van.
+- Súlyos instabilitás: seed4 a 36000. lépésnél train acc 0.72, seed5 a 33000.-nél 0.56; mindkettő helyreállt.
+
+### Értelmezés
+A 2 rétegű modell munkamegosztása friss modelleken is megismétlődött: a 0. réteg MLP-je a "="
+pozíción szorzat-tagok nélkül, egyváltozós (de kauzálisan szükséges) feldolgozást végez; az 1. réteg
+MLP-je az 1 rétegű modell szorzat-mechanizmusát futtatja, és közvetlenül ez adja a margin >90%-át.
+
+### Bizonytalanság
+Szűk tartalékok: seed3 alapvonal 0.9952; seed5 "L0 egyváltozós ki" 0.599 (küszöb 0.75).
+Hogy a 0. réteg MIT készít elő, nem tudjuk.
