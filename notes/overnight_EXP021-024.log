@@ -1,0 +1,129 @@
+nohup: bemenet figyelmen kívül hagyása
+done experiments/EXP021/d101/config.yaml seed0 23:19:22
+done experiments/EXP021/d101/config.yaml seed1 23:24:39
+done experiments/EXP021/d101/config.yaml seed2 23:29:55
+done experiments/EXP021/d202/config.yaml seed0 23:35:10
+done experiments/EXP021/d202/config.yaml seed1 23:40:26
+done experiments/EXP021/d202/config.yaml seed2 23:45:42
+done experiments/EXP024/lr3e-4_wd1/config.yaml seed3 23:55:06
+done experiments/EXP024/lr3e-4_wd1/config.yaml seed4 00:04:30
+done experiments/EXP024/lr3e-4_wd1/config.yaml seed5 00:13:54
+done experiments/EXP024/lr3e-3_wd1/config.yaml seed3 00:23:19
+done experiments/EXP024/lr3e-3_wd1/config.yaml seed4 00:32:43
+done experiments/EXP024/lr3e-3_wd1/config.yaml seed5 00:42:08
+done experiments/EXP024/lr3e-4_wd0/config.yaml seed3 00:51:31
+done experiments/EXP024/lr3e-4_wd0/config.yaml seed4 01:00:55
+done experiments/EXP024/lr3e-4_wd0/config.yaml seed5 01:10:19
+done experiments/EXP024/lr1e-3_wd0/config.yaml seed3 01:19:42
+done experiments/EXP024/lr1e-3_wd0/config.yaml seed4 01:29:06
+done experiments/EXP024/lr1e-3_wd0/config.yaml seed5 01:38:30
+done experiments/EXP024/lr3e-3_wd0/config.yaml seed3 01:47:54
+done experiments/EXP024/lr3e-3_wd0/config.yaml seed4 01:57:17
+done experiments/EXP024/lr3e-3_wd0/config.yaml seed5 02:06:41
+done experiments/EXP023/train/config.yaml seed9 02:16:05
+done experiments/EXP023/train/config.yaml seed10 02:25:30
+done experiments/EXP023/train/config.yaml seed11 02:34:54
+done experiments/EXP023/train/config.yaml seed12 02:44:18
+done experiments/EXP023/train/config.yaml seed13 02:53:43
+done experiments/EXP023/train/config.yaml seed14 03:03:07
+done experiments/EXP023/train/config.yaml seed15 03:12:32
+done experiments/EXP023/train/config.yaml seed16 03:21:56
+done experiments/EXP023/train/config.yaml seed17 03:31:20
+done experiments/EXP023/train/config.yaml seed18 03:40:44
+done experiments/EXP023/train/config.yaml seed19 03:50:08
+done experiments/EXP023/train/config.yaml seed20 03:59:32
+=== EXP021: crossed design data_seed x model seed (1-layer) ===
+split seed test_acc first_test  freqs (alias rel_margin)
+  598    0   1.0000      10400  [9, 19, 30, 33] (0.394)
+  598    1   1.0000       8500  [10, 27, 31] (0.143)
+  598    2   1.0000      10900  [2, 9, 17, 56] (0.380)
+  101    0   1.0000       5900  [9, 12, 53] (0.199)
+  101    1   1.0000      10300  [6, 8, 47, 48] (0.377)
+  101    2   1.0000       5600  [10, 28, 51, 53] (0.413)
+  202    0   1.0000       5500  [11, 13, 19, 53] (0.291)
+  202    1   1.0000       8400  [13, 26, 34, 38] (0.348)
+  202    2   1.0000       6000  [13, 19, 44, 46] (0.227)
+
+H023: passed 6/6 new runs; in band 6/6; split flags {'101': 'no flag', '202': 'no flag'}
+variance shares of log10(first_test) [descriptive, df tiny]: rows 0.45, cols 0.18, residual 0.36  (rows = split, cols = seed)
+variance shares of K: rows 0.14, cols 0.14, residual 0.71
+H024: mean same-seed Jaccard 0.053 over 9 pairs | control: mean cross-seed Jaccard 0.103 over 9 pairs
+    seed 0: 598 vs 101  J = 0.17
+    seed 0: 598 vs 202  J = 0.14
+    seed 0: 101 vs 202  J = 0.17
+    seed 1: 598 vs 101  J = 0.00
+    seed 1: 598 vs 202  J = 0.00
+    seed 1: 101 vs 202  J = 0.00
+    seed 2: 598 vs 101  J = 0.00
+    seed 2: 598 vs 202  J = 0.00
+    seed 2: 101 vs 202  J = 0.00
+
+=== PREDICTIONS ===
+H023 primary (pass >= 5/6): MET
+H023 secondary (first_test in band, all): MET
+H024 (same-seed Jaccard): NOT MET
+
+saved -> experiments/EXP021/results
+=== EXP024: lr x weight-decay grid, 2-layer, seeds 3–5 ===
+cell         seed test_acc  first spikes  max loss  freqs (m) [J vs base]
+lr3e-4_wd1      3   0.3136   None     31   2.9e-01  [28] (0.002) [0.50]
+lr3e-4_wd1      4   1.0000  26100     17   5.2e-01  [1, 8, 41] (0.137) [0.50]
+lr3e-4_wd1      5   0.1185   None     21   2.8e-01  [24] (0.002) [0.25]
+lr1e-3_wd1      3   0.9952   7600     19   1.9e+01  [28, 43] (0.022) [1.00]
+lr1e-3_wd1      4   1.0000   5400     19   3.0e+00  [8, 27, 41] (0.208) [1.00]
+lr1e-3_wd1      5   1.0000   9700     21   4.3e+00  [1, 21, 24, 36] (0.354) [1.00]
+lr3e-3_wd1      3   0.9999   1900     36   3.8e+01  [19, 49] (0.020) [0.00]
+lr3e-3_wd1      4   0.1988   1100     23   1.6e+01  [5, 41] (0.010) [0.25]
+lr3e-3_wd1      5   0.8451   1300      7   1.1e+01  [36] (0.002) [0.25]
+lr3e-4_wd0      3   0.0149   None      0   1.1e-07  [] (nan) [0.00]
+lr3e-4_wd0      4   0.0192   None      0   1.0e-07  [] (nan) [0.00]
+lr3e-4_wd0      5   0.0092   None      0   1.2e-07  [] (nan) [0.00]
+lr1e-3_wd0      3   0.0155   None      0   4.4e-08  [] (nan) [0.00]
+lr1e-3_wd0      4   0.0223   None      0   3.7e-08  [] (nan) [0.00]
+lr1e-3_wd0      5   0.0129   None      0   4.7e-08  [] (nan) [0.00]
+lr3e-3_wd0      3   0.0198   None      0   1.0e-08  [] (nan) [0.00]
+lr3e-3_wd0      4   0.0275   None      0   9.6e-09  [] (nan) [0.00]
+lr3e-3_wd0      5   0.0162   None      0   1.4e-08  [] (nan) [0.00]
+
+H028a per seed (None = undecidable): {3: False, 4: False, 5: False}
+H028c: seed3 @ lr3e-4_wd1: freqs [28], acc 0.3136, J vs [28, 43] = 0.50
+
+=== PREDICTIONS ===
+H028a (instability is lr-driven at wd 1.0): NOT MET
+H028b (no generalization at wd 0, lr <= 1e-3): MET
+H028c (seed3 at low lr): M1-like (init decides)
+
+saved -> experiments/EXP024/results
+=== EXP023: residual error vs alias margin / number of frequencies (2-layer) ===
+(* = K drop within the window of a training-loss spike)
+FRESH models (verdict):
+  seed9          acc 1.0000       first   7400 K 5 [1, 2, 7, 30, 49] m 0.456 alias d [109, 4] | spikes 19 max 2.9e+00 | K drops 29000:5->4*, 31000:5->4* | early J 1000:1.00 2000:1.00 3000:1.00 5000:1.00
+  seed10         acc 0.9994       first   5000 K 3 [2, 24, 25] m 0.147 alias d [5, 108] | spikes 12 max 1.4e-01 | K drops - | early J 1000:0.50 2000:0.50 3000:0.50 5000:1.00
+  seed11         acc 1.0000       first   6000 K 3 [3, 10, 44] m 0.217 alias d [36, 77] | spikes 19 max 1.2e+00 | K drops 11000:4->3 | early J 1000:0.20 2000:0.50 3000:0.50 5000:0.50
+  seed12         acc 1.0000       first   7100 K 3 [36, 37, 53] m 0.261 alias d [107, 6] | spikes 18 max 1.9e+00 | K drops 9000:4->3 | early J 1000:0.50 2000:0.50 3000:0.50 5000:0.50
+  seed13         acc 1.0000       first   6500 K 3 [8, 21, 35] m 0.127 alias d [97, 16] | spikes 16 max 2.4e+00 | K drops 9000:5->4, 10000:4->3 | early J 1000:0.50 2000:0.50 3000:0.50 5000:1.00
+  seed14         acc 0.9999       first   5500 K 4 [1, 14, 17, 24] m 0.359 alias d [33, 80] | spikes 18 max 1.3e+00 | K drops - | early J 1000:0.60 2000:0.60 3000:0.60 5000:1.00
+  seed15         acc 1.0000       first   3900 K 3 [23, 27, 55] m 0.176 alias d [84, 29] | spikes 16 max 2.5e-01 | K drops - | early J 1000:1.00 2000:1.00 3000:1.00 5000:1.00
+  seed16         acc 0.9940 STUCK first   5600 K 5 [2, 9, 21, 38, 53] m 0.447 alias d [60, 53] | spikes 18 max 2.1e-01 | K drops - | early J 1000:1.00 2000:1.00 3000:1.00 5000:1.00
+  seed17         acc 1.0000       first   6000 K 3 [36, 45, 49] m 0.157 alias d [60, 53] | spikes 15 max 1.1e+00 | K drops - | early J 1000:1.00 2000:1.00 3000:1.00 5000:1.00
+  seed18         acc 1.0000       first   6600 K 4 [7, 9, 36, 53] m 0.309 alias d [100, 13] | spikes 16 max 5.5e-01 | K drops - | early J 1000:1.00 2000:1.00 3000:1.00 5000:1.00
+  seed19         acc 1.0000       first   5300 K 4 [4, 22, 24, 33] m 0.349 alias d [52, 61] | spikes 17 max 1.8e+00 | K drops - | early J 1000:1.00 2000:1.00 3000:1.00 5000:1.00
+  seed20         acc 1.0000       first   7100 K 4 [2, 25, 38, 55] m 0.315 alias d [45, 68] | spikes 11 max 2.1e-01 | K drops 13000:6->5, 35000:5->4* | early J 1000:0.33 2000:0.33 3000:0.33 5000:0.33
+excluded (test acc < 0.9): none
+REFERENCE models (inspired the hypotheses; NOT in the verdict):
+  EXP013/seed0   acc 1.0000       first   7300 K 3 [2, 11, 19] m 0.229 alias d [60, 53] | spikes 25 max 8.3e+00 | K drops 9000:4->3* | early J 1000:1.00 2000:1.00 3000:1.00 5000:1.00
+  EXP013/seed1   acc 1.0000       first   5700 K 4 [29, 38, 44, 54] m 0.330 alias d [90, 23] | spikes 18 max 9.5e-01 | K drops - | early J 1000:0.60 2000:0.60 3000:1.00 5000:1.00
+  EXP013/seed2   acc 1.0000       first   5500 K 3 [9, 27, 55] m 0.172 alias d [76, 37] | spikes 17 max 3.3e-01 | K drops 7000:4->3 | early J 1000:1.00 2000:1.00 3000:1.00 5000:0.50
+  EXP017/seed3   acc 0.9952 STUCK first   7600 K 2 [28, 43] m 0.022 alias d [8, 105] | spikes 19 max 1.9e+01 | K drops 10000:3->2*, 16000:3->2*, 18000:3->2*, 26000:3->2*, 29000:3->2*, 37000:3->2* | early J 1000:0.33 2000:0.33 3000:0.33 5000:0.33
+  EXP017/seed4   acc 1.0000       first   5400 K 3 [8, 27, 41] m 0.208 alias d [58, 55] | spikes 19 max 3.0e+00 | K drops 10000:4->3 | early J 1000:0.50 2000:0.50 3000:1.00 5000:1.00
+  EXP017/seed5   acc 1.0000       first   9700 K 4 [1, 21, 24, 36] m 0.354 alias d [10, 103] | spikes 21 max 4.3e+00 | K drops - | early J 1000:0.33 2000:0.33 3000:0.33 5000:0.33
+
+counts: included 12 | rel_margin<0.1: 0 | rel_margin>=0.15: 10 | stuck: 1 | K<=2: 0
+
+=== PREDICTIONS ===
+H026a (rel_margin < 0.10 -> stuck): UNDECIDABLE
+H026b (rel_margin >= 0.15 -> not stuck): NOT MET
+H027a (stuck -> K <= 2): NOT MET
+H027b (K <= 2 -> stuck): UNDECIDABLE
+
+saved -> experiments/EXP023/results

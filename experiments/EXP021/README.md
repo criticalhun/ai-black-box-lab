@@ -1,6 +1,6 @@
 # EXP021 — Split-variancia: H001-replika új adatfelosztásokon (H023, H024)
 
-**Státusz:** PREREGISTERED (még nem futott)
+**Státusz:** COMPLETED — eredmények: JOURNAL (EXP021–EXP024 eredmény-blokk)
 
 Keresztezett terv, 1 rétegű modell: data_seed {598, 101, 202} × modell-seed {0, 1, 2}.
 A 598-as sor az EXP001 meglévő futásai; új futás csak a 101-es és 202-es felosztásra kell (6 db).

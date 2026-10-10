@@ -594,3 +594,52 @@ Kiértékelés: TELJESÜLT / NEM TELJESÜLT / NEM DÖNTHETŐ (+ INVALID, ha az �
 - H026a/H027: ha a K ≤ 2 alapgyakorisága ~1/6, 12 modellnél ~11% az esély, hogy egy sincs → NEM DÖNTHETŐ.
 - H024: kevés pár (9), a küszöbök durvák; a vegyes sáv (0.20–0.50) szándékosan széles.
 - Az instabilitás-mérőszám a 100 lépéses naplózás felbontásától függ (a rövid kiugrások kimaradhatnak).
+
+## 2026-10-10 11:21 CEST — EREDMÉNYEK: EXP021–EXP024 (+ EXP022), H023–H028
+
+### Típus
+EREDMÉNY-blokk a preregisztrációhoz (commit c54bdfd). A predikciók változatlanok.
+Futások: notes/overnight_EXP021-024.log (33/33 kész, FAILED nincs). GPU kb. 4,7 óra.
+
+### Predikciók kiértékelése
+| ID | Ítélet | Fő szám |
+|---|---|---|
+| H023 elsődleges | TELJESÜLT | 6/6 általánosít |
+| H023 másodlagos | TELJESÜLT | 6/6 a sávban (5500–10300) |
+| H024 | NEM TELJESÜLT | azonos seed Jaccard 0.053; kontroll 0.103 |
+| H025 elsődleges | TELJESÜLT | ±8 arány 0.512 (≥ 0.50) |
+| H025 másodlagos | NEM TELJESÜLT | 0.651 (< 0.70) |
+| H026a | NEM DÖNTHETŐ | 0 modell m < 0.10 |
+| H026b | NEM TELJESÜLT | seed16: m 0.447, acc 0.9940 |
+| H027a | NEM TELJESÜLT | seed16: K 5 |
+| H027b | NEM DÖNTHETŐ | 0 modell K ≤ 2 |
+| H028a | NEM TELJESÜLT | 0/3 seed; S(3e-4) = 31/17/21 vs alap 19/19/21 |
+| H028b | TELJESÜLT | wd 0: 0/6 általánosít |
+| H028c | formálisan M1-szerű; NEM ÉRTELMEZHETŐ | a modell nem általánosított (acc 0.31) |
+
+### MEGFIGYELÉS (utólagos, ítélet nélkül)
+- wd 0 mellett 9/9 futásban S = 0 — de nem is általánosítottak (konfundált).
+- lr 3e-3: 2/3 seed összeomlott (0.20, 0.85); lr 3e-4: 2/3 nem általánosított 40k-ig. Csak az 1e-3 működik a rácsban.
+- lr 3e-3 seed3: K 2, m 0.020, acc 0.9999 — kis margójú kétfrekvenciás modell, mégsem akadt el.
+- Referencia EXP017 seed3: a 3→2 K-csökkenés hatszor, mindig loss-kiugrás ±1000 lépésén belül (M2-re utal; 1 modell, utólag).
+- Friss modellek 7/12-nél a végső halmaz már az 1000. lépésben látszik (korai top-K J = 1.0).
+- Elakadás alapgyakorisága: 2 rétegű alapmodellek 2/18 (seed3, seed16); 1 rétegű 0/15.
+- EXP022: a seed3 hibáinak további 11 darabja ±29-nél.
+
+### JAVÍTÁS a preregisztrációs blokkhoz (hibás adat, nem törölve)
+A "MEGFIGYELÉS" pontban az "1 és 2 rétegű seed 0–2 halmazok azonosak" állítás HAMIS: a 2 rétegű
+EXP013 halmazokat rendeltem az 1 rétegű oszlophoz. A helyes 1 rétegű halmazok (EXP001):
+{9,19,30,33}, {10,27,31}, {2,9,17,56}. Az 1 vs 2 rétegű Jaccard-átlag (seed 0–5) 0.20, nem 0.65.
+Ugyanígy hibás a "többi 11 halmaz margója 0.17–0.35" (duplikátumokat tartalmazott).
+A H024 tesztjét ez nem érinti.
+
+### Értelmezés
+- A H001 nem split-függő (ebben a 3 felosztásban). Az általánosítás időpontjában van némi split-hatás (leíró).
+- A frekvencia-választás nem az inittől függ: más split mellett ugyanaz a seed más halmazt választ.
+- Az alias-margó a seed3 hibáinak HELYÉT részben megjósolta, de az ELAKADÁST általánosan nem jósolja meg
+  (seed16). A frekvenciaszám sem jósolja meg. Az elakadás oka nyitott.
+- Az instabilitás nem csökken alacsonyabb lr-rel (ebben a rácsban). Weight decay nélkül nincs, de ott általánosítás sincs.
+
+### Következő lépés
+Exploratív: a két elakadt modell (EXP017 seed3, EXP023 seed16) hibáinak és frekvencia-erősségeinek
+összevetése; a seed16 hibái hol vannak.

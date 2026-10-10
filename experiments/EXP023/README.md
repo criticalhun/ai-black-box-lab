@@ -1,6 +1,6 @@
 # EXP023 — Friss 2 rétegű seed-batch: elakadás vs alias-margó / frekvenciaszám (H026, H027)
 
-**Státusz:** PREREGISTERED (még nem futott)
+**Státusz:** COMPLETED — eredmények: JOURNAL (EXP021–EXP024 eredmény-blokk)
 
 12 friss 2 rétegű modell (seed 9–20), split 598, alap-hiperparaméterek (= EXP017 config,
 csak `experiment`, `hypothesis` és `seeds` más). Minden modellnél rögzítjük: a végső

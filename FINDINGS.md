@@ -92,3 +92,14 @@ Nyitott: mit készít elő a 0. réteg; az erős tanítási instabilitás oka.
 (2) az 1. réteg a-t hozza; (3) az MLP1 ReLU-val szorzat-tagokat képez; (4) ezek adják a választ.
 Az 1 rétegű modellben (1) és (2) egyetlen attention-lépés volt.
 Nyitott: miért b; mivé alakítja az MLP0 b-t; az instabil tanítás; a seed3-anomália.
+
+## 3. fázis — split-variancia, elakadás, instabilitás (H023–H028)
+| ID | Állítás | Státusz |
+|---|---|---|
+| H023 | H001 új felosztásokon is (6/6) | SUPPORTED |
+| H024 | a frekvencia-választást az init dönti el | REJECTED (Jaccard 0.053) |
+| H025 | seed3 hibái az alias-eltolásnál (±8) | PARTIAL (51% ≥ 50%; ±8/±16 65% < 70%) |
+| H026 | az alias-margó jósolja az elakadást | REJECTED (seed16) |
+| H027 | a frekvenciaszám jósolja az elakadást | REJECTED (seed16) |
+| H028 | az instabilitás lr-eredetű | PARTIAL (lr-függés NEM; wd 0 → nincs általánosítás) |
+Javítás: a H024 motivációs táblája hibás adatot tartalmazott (lásd H024.md, JOURNAL).
